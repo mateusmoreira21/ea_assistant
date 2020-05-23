@@ -261,9 +261,6 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                                     fontWeight: FontWeight.normal),
                               ),
                               FlatButton(
-                                onPressed: () {
-                                  // Ir para o criar conta
-                                },
                                 child: Text(
                                   "Crie Agora",
                                   style: TextStyle(
@@ -272,6 +269,9 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                                       fontWeight: FontWeight.w900),
                                 ),
                                 padding: EdgeInsets.zero,
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/login/signup');
+                                },
                               ),
                             ],
                           ),
