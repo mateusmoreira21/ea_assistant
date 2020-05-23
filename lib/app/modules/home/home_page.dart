@@ -14,23 +14,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends ModularState<HomePage, HomeController> {
   //use 'controller' variable to access controller
 
-  var services = [
-    "Cadastro de Mei",
-    "Fornecedores",
-    "Dashboard",
-    "Lançamentos",
-    "Editar Dados",
-    "OCR"
-  ];
-  var images = [
-    "lib/app/images/icons/mei.png",
-    "lib/app/images/icons/fornecedor.png",
-    "lib/app/images/icons/dashboard.png",
-    "lib/app/images/icons/lancamento.png",
-    "lib/app/images/icons/config.png",
-    "lib/app/images/icons/scan.png",
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +27,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
         body: Padding(
           padding: EdgeInsets.all(8),
           child: GridView.builder(
-              itemCount: services.length,
+              itemCount: controller.services().length,
               gridDelegate: (SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 childAspectRatio: MediaQuery.of(context).size.width /
@@ -70,11 +53,11 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                           SizedBox(
                               height:
                                   MediaQuery.of(context).size.height * 0.01),
-                          Image.asset(images[index], height: 50, width: 50),
+                          Image.asset(controller.images()[index], height: 50, width: 50),
                           Padding(
                             padding: EdgeInsets.all(20),
                             child: Text(
-                              services[index],
+                              controller.services()[index],
                               style: TextStyle(
                                   fontSize:
                                       MediaQuery.of(context).size.height * 0.02,

@@ -7,8 +7,8 @@ class AuthRepository implements IAuthRepository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
-  Future getEmailPasswordLogin() {
-    return null;
+  Future<FirebaseUser> getEmailPasswordLogin() {
+    
   }
 
   @override

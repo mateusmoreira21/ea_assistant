@@ -13,8 +13,14 @@ abstract class _AuthControllerBase with Store {
   @observable
   FirebaseUser user;
 
+  @observable
+  AuthStatus status = AuthStatus.loading;
+
   @action
-  setUser(FirebaseUser value) => user = value;
+  setUser(FirebaseUser value) {
+    user = value;
+    status = user == null ? AuthStatus.logoff : AuthStatus.login;
+  } 
 
   _AuthControllerBase() {
     _authRepository.getUser().then(setUser);
@@ -28,4 +34,8 @@ abstract class _AuthControllerBase with Store {
   Future logOut() {
     return _authRepository.getLogout();
   }
+}
+
+enum AuthStatus {
+  loading, login, logoff
 }

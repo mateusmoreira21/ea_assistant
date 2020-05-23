@@ -24,6 +24,21 @@ mixin _$AuthController on _AuthControllerBase, Store {
     });
   }
 
+  final _$statusAtom = Atom(name: '_AuthControllerBase.status');
+
+  @override
+  AuthStatus get status {
+    _$statusAtom.reportRead();
+    return super.status;
+  }
+
+  @override
+  set status(AuthStatus value) {
+    _$statusAtom.reportWrite(value, super.status, () {
+      super.status = value;
+    });
+  }
+
   final _$loginWithGoogleAsyncAction =
       AsyncAction('_AuthControllerBase.loginWithGoogle');
 
@@ -49,7 +64,8 @@ mixin _$AuthController on _AuthControllerBase, Store {
   @override
   String toString() {
     return '''
-user: ${user}
+user: ${user},
+status: ${status}
     ''';
   }
 }
