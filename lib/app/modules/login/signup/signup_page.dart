@@ -1,6 +1,10 @@
 import 'package:ea_assistant/app/animation/FadeAnimation.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mobx/mobx.dart';
+import 'package:the_validator/the_validator.dart';
 import 'signup_controller.dart';
 
 class SignupPage extends StatefulWidget {
@@ -51,31 +55,45 @@ class _SignupPageState extends ModularState<SignupPage, SignupController> {
                           key: _formKey,
                           child: Column(
                             children: <Widget>[
-                              TextFormField(
-                                decoration: InputDecoration(
-                                    hintText: 'Nome Completo',
-                                    prefixIcon: Icon(Icons.list)),
-                              ),
+                              // observer do Nome
+                              Observer(builder: (_) {
+                                return TextFormField(
+                                  onChanged: controller.changeName,
+                                  decoration: InputDecoration(
+                                    labelText: 'Nome Completo',
+                                    prefixIcon: Icon(Icons.list),
+                                    errorText: controller.validateName()
+                                  ),
+                                );
+                              }),
+
                               SizedBox(
                                 height: 10,
                               ),
-                              TextFormField(
-                                decoration: InputDecoration(
-                                  hintText: 'E-mail',
-                                  prefixIcon: Icon(Icons.email),
-                                ),
-                                keyboardType: TextInputType.emailAddress,
+                              // observer do email
+                              Observer(builder: (_) {
+                                return TextFormField(
+                                  onChanged: controller.changeEmail,
+                                  decoration: InputDecoration(
+                                    labelText: 'E-mail',
+                                    prefixIcon: Icon(Icons.email),
+                                    errorText: controller.validateEmail()
+                                  ),
+                                  keyboardType: TextInputType.emailAddress,
+                                );
+                              }),
+
+                              SizedBox(
+                                height: 10,
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(
-                                  top: 16,
-                                ),
-                                child: TextFormField(
-                                  controller: _passController,
+
+                              Observer(builder: (_) {
+                                return TextFormField(
+                                  onChanged: controller.changePass,
                                   obscureText:
                                       _showPassword == false ? true : false,
                                   decoration: InputDecoration(
-                                    hintText: 'Senha',
+                                    labelText: 'Senha',
                                     suffixIcon: GestureDetector(
                                       child: Icon(_showPassword == false
                                           ? Icons.visibility_off
@@ -88,16 +106,22 @@ class _SignupPageState extends ModularState<SignupPage, SignupController> {
                                     ),
                                     prefixIcon: Icon(Icons.lock),
                                   ),
-                                ),
+                                  
+                                );
+                              }),
+
+                              SizedBox(
+                                height: 10,
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(top: 16, bottom: 62),
-                                child: TextField(
+
+                              Observer(builder: (_) {
+                                return TextFormField(
+                                  onChanged: controller.changePass2,
                                   obscureText:
                                       _showPassword == false ? true : false,
                                   decoration: InputDecoration(
-                                    hintText: 'Confirme sua senha',
-                                    prefixIcon: Icon(Icons.lock),
+                                    labelText: 'Senha',
+                                    errorText: controller.validatePass(),
                                     suffixIcon: GestureDetector(
                                       child: Icon(_showPassword == false
                                           ? Icons.visibility_off
@@ -108,11 +132,15 @@ class _SignupPageState extends ModularState<SignupPage, SignupController> {
                                         });
                                       },
                                     ),
+                                    prefixIcon: Icon(Icons.lock),
                                   ),
-                                ),
-                              ),
-                              MaterialButton(
-                                child: Container(
+                                );
+                              }),
+
+                              SizedBox(height: 80),
+
+                              Observer(builder: (_){
+                                return Container(
                                   height: 45,
                                   width: double.maxFinite,
                                   decoration: BoxDecoration(
@@ -120,18 +148,17 @@ class _SignupPageState extends ModularState<SignupPage, SignupController> {
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(32)),
                                   ),
-                                  child: Center(
+                                  child: MaterialButton(
+                                  onPressed: controller.validateButtom ? () {controller.signUp(); Modular.to.pushReplacementNamed('/home');} : null,
+                                  disabledColor: Colors.grey,
                                     child: Text(
                                       'CADASTRAR',
                                       style: TextStyle(color: Colors.white),
                                     ),
                                   ),
-                                ),
-                                onPressed: () {},
-                              ),
-                              Container(
-                                height: 8,
-                              ),
+                                );
+                              }),
+
                               Container(
                                 height: 70,
                               ),
@@ -155,7 +182,9 @@ class _SignupPageState extends ModularState<SignupPage, SignupController> {
                                       ],
                                     ),
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Modular.to.pushReplacementNamed('/home');
+                                  },
                                 ),
                               ),
                             ],

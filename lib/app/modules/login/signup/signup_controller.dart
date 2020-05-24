@@ -1,15 +1,103 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mobx/mobx.dart';
+import 'package:string_validator/string_validator.dart';
 
 part 'signup_controller.g.dart';
 
 class SignupController = _SignupControllerBase with _$SignupController;
 
 abstract class _SignupControllerBase with Store {
-  @observable
-  int value = 0;
+  bool isLoading;
 
+  @observable
+  String name;
   @action
-  void increment() {
-    value++;
+  changeName(String value) => name = value;
+
+  @observable
+  String email = '';
+  @action
+  changeEmail(String value) => email = value;
+
+  @observable
+  String pass = '';
+  @action
+  changePass(String value) => pass = value;
+
+  @observable
+  String pass2 = '';
+  @action
+  changePass2(String value) => pass2 = value;
+
+  @computed
+  bool get validateButtom {
+    return validateName() == null &&
+        validateEmail() == null &&
+        validatePass() == null;
+  }
+
+  // funções de validação
+
+  String validateName() {
+    if (this.name == null || this.name.isEmpty) {
+      return "Este campo é obrigatório";
+    } else if (isNumeric(this.name) == true) {
+      return "Digite um nome valido";
+    }
+
+    return null;
+  }
+
+  String validateEmail() {
+    if (isEmail(this.email) == false) {
+      return "Utilize um e-mail valido";
+    }
+
+    return null;
+  }
+
+  String validatePass() {
+    if (pass2 != pass) return "As senhas são diferentes";
+
+    return null;
+  }
+
+  // Funções de Cadastro Firebase
+
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  Map<String, dynamic> userData = Map();
+  FirebaseUser firebaseUser;
+  AuthResult firebaseAuth;
+  Firestore db = Firestore.instance;
+
+
+  void signUp(){
+    userData = {
+      "name": name,
+      "email": email,
+    };
+
+    _auth.createUserWithEmailAndPassword(
+      email: userData["email"],
+      password: pass).then((user) async {
+
+      firebaseAuth = user;
+      var idUser = firebaseUser.getIdToken();
+      await _saveUserData(userData, idUser);
+
+
+      isLoading = false;
+
+    }).catchError((e) {});
+  }
+
+  void recoverPass() {}
+
+  // Salvar dados de Cadastro no banco NAO FUNCIONA AINDA
+
+  Future<void> _saveUserData(Map<String, dynamic> userData, idUser) async {
+
+    await db.collection("users").document(idUser).setData(userData);
   }
 }
