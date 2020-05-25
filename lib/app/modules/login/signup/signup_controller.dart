@@ -58,7 +58,9 @@ abstract class _SignupControllerBase with Store {
   }
 
   String validatePass() {
-    if (pass2 != pass) return "As senhas são diferentes";
+    if (pass.isEmpty && pass2.isEmpty) {
+      return "";
+    } else if (pass2 != pass) return "As senhas são diferentes";
 
     return null;
   }
@@ -71,24 +73,19 @@ abstract class _SignupControllerBase with Store {
   AuthResult firebaseAuth;
   Firestore db = Firestore.instance;
 
-
-  void signUp(){
+  void signUp() {
     userData = {
       "name": name,
       "email": email,
     };
 
-    _auth.createUserWithEmailAndPassword(
-      email: userData["email"],
-      password: pass).then((user) async {
-
+    _auth
+        .createUserWithEmailAndPassword(
+            email: userData["email"], password: pass)
+        .then((user) async {
       firebaseAuth = user;
-      var idUser = firebaseUser.getIdToken();
-      await _saveUserData(userData, idUser);
 
-
-      isLoading = false;
-
+      await _saveUserData(userData);
     }).catchError((e) {});
   }
 
@@ -96,8 +93,10 @@ abstract class _SignupControllerBase with Store {
 
   // Salvar dados de Cadastro no banco NAO FUNCIONA AINDA
 
-  Future<void> _saveUserData(Map<String, dynamic> userData, idUser) async {
-
-    await db.collection("users").document(idUser).setData(userData);
+  Future<void> _saveUserData(Map<String, dynamic> userData) async {
+    await db
+        .collection("users")
+        .document(firebaseAuth.user.uid)
+        .setData(userData);
   }
 }
