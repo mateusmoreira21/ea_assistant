@@ -87,6 +87,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                                           bottom: BorderSide(
                                               color: Colors.grey[200]))),
                                   child: TextFormField(
+                                    onChanged: controller.changeEmail,
                                     decoration: InputDecoration(
                                         icon: Icon(Icons.email),
                                         hintText: "Email",
@@ -94,16 +95,13 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                                             TextStyle(color: Colors.grey),
                                         border: InputBorder.none),
                                     keyboardType: TextInputType.emailAddress,
-                                    validator: (text) {
-                                      if (text.isEmpty || !text.contains("@"))
-                                        return "E-mail inválido!";
-                                    },
                                   ),
                                 ),
                                 Container(
                                   padding: EdgeInsets.all(10),
                                   decoration: BoxDecoration(),
                                   child: TextFormField(
+                                    onChanged: controller.changeSenha,
                                     decoration: InputDecoration(
                                       icon: Icon(Icons.lock),
                                       hintText: "Senha",
@@ -122,10 +120,6 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                                     ),
                                     obscureText:
                                         _showPassword == false ? true : false,
-                                    validator: (text) {
-                                      if (text.isEmpty || text.length < 6)
-                                        return "Senha Invalida";
-                                    },
                                   ),
                                 ),
                               ],
@@ -174,9 +168,11 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                                         ),
                                         textAlign: TextAlign.center),
                                   ),
-                                  onPressed: () {
-                                    // Função Login E-mail/Senha
-                                  },
+                                  onPressed: controller.validateButtom
+                                      ? () {
+                                          controller.loginWithEmail();
+                                        }
+                                      : null,
                                 ),
                               ),
                             )),

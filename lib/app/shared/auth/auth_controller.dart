@@ -20,10 +20,15 @@ abstract class _AuthControllerBase with Store {
   setUser(FirebaseUser value) {
     user = value;
     status = user == null ? AuthStatus.logoff : AuthStatus.login;
-  } 
+  }
 
   _AuthControllerBase() {
     _authRepository.getUser().then(setUser);
+  }
+
+  @action
+  Future loginWithEmail(String usuario, String senha) async {
+    user = await _authRepository.getEmailPasswordLogin(usuario, senha);
   }
 
   @action
@@ -36,6 +41,4 @@ abstract class _AuthControllerBase with Store {
   }
 }
 
-enum AuthStatus {
-  loading, login, logoff
-}
+enum AuthStatus { loading, login, logoff }

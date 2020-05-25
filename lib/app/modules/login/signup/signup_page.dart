@@ -60,10 +60,9 @@ class _SignupPageState extends ModularState<SignupPage, SignupController> {
                                 return TextFormField(
                                   onChanged: controller.changeName,
                                   decoration: InputDecoration(
-                                    labelText: 'Nome Completo',
-                                    prefixIcon: Icon(Icons.list),
-                                    errorText: controller.validateName()
-                                  ),
+                                      labelText: 'Nome Completo',
+                                      prefixIcon: Icon(Icons.list),
+                                      errorText: controller.validateName()),
                                 );
                               }),
 
@@ -75,10 +74,9 @@ class _SignupPageState extends ModularState<SignupPage, SignupController> {
                                 return TextFormField(
                                   onChanged: controller.changeEmail,
                                   decoration: InputDecoration(
-                                    labelText: 'E-mail',
-                                    prefixIcon: Icon(Icons.email),
-                                    errorText: controller.validateEmail()
-                                  ),
+                                      labelText: 'E-mail',
+                                      prefixIcon: Icon(Icons.email),
+                                      errorText: controller.validateEmail()),
                                   keyboardType: TextInputType.emailAddress,
                                 );
                               }),
@@ -106,7 +104,6 @@ class _SignupPageState extends ModularState<SignupPage, SignupController> {
                                     ),
                                     prefixIcon: Icon(Icons.lock),
                                   ),
-                                  
                                 );
                               }),
 
@@ -139,7 +136,7 @@ class _SignupPageState extends ModularState<SignupPage, SignupController> {
 
                               SizedBox(height: 80),
 
-                              Observer(builder: (_){
+                              Observer(builder: (_) {
                                 return Container(
                                   height: 45,
                                   width: double.maxFinite,
@@ -149,8 +146,14 @@ class _SignupPageState extends ModularState<SignupPage, SignupController> {
                                         BorderRadius.all(Radius.circular(32)),
                                   ),
                                   child: MaterialButton(
-                                  onPressed: controller.validateButtom ? () {controller.signUp(); Modular.to.pushReplacementNamed('/home');} : null,
-                                  disabledColor: Colors.grey,
+                                    onPressed: controller.validateButtom
+                                        ? () {
+                                            controller.signUp();
+                                            Modular.to
+                                                .pushReplacementNamed('/home');
+                                          }
+                                        : null,
+                                    disabledColor: Colors.grey,
                                     child: Text(
                                       'CADASTRAR',
                                       style: TextStyle(color: Colors.white),

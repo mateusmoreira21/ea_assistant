@@ -9,6 +9,14 @@ part of 'login_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$LoginController on _LoginControllerBase, Store {
+  Computed<bool> _$validateButtomComputed;
+
+  @override
+  bool get validateButtom =>
+      (_$validateButtomComputed ??= Computed<bool>(() => super.validateButtom,
+              name: '_LoginControllerBase.validateButtom'))
+          .value;
+
   final _$loadingAtom = Atom(name: '_LoginControllerBase.loading');
 
   @override
@@ -24,6 +32,36 @@ mixin _$LoginController on _LoginControllerBase, Store {
     });
   }
 
+  final _$usuarioAtom = Atom(name: '_LoginControllerBase.usuario');
+
+  @override
+  String get usuario {
+    _$usuarioAtom.reportRead();
+    return super.usuario;
+  }
+
+  @override
+  set usuario(String value) {
+    _$usuarioAtom.reportWrite(value, super.usuario, () {
+      super.usuario = value;
+    });
+  }
+
+  final _$senhaAtom = Atom(name: '_LoginControllerBase.senha');
+
+  @override
+  String get senha {
+    _$senhaAtom.reportRead();
+    return super.senha;
+  }
+
+  @override
+  set senha(String value) {
+    _$senhaAtom.reportWrite(value, super.senha, () {
+      super.senha = value;
+    });
+  }
+
   final _$loginWithGoogleAsyncAction =
       AsyncAction('_LoginControllerBase.loginWithGoogle');
 
@@ -32,10 +70,46 @@ mixin _$LoginController on _LoginControllerBase, Store {
     return _$loginWithGoogleAsyncAction.run(() => super.loginWithGoogle());
   }
 
+  final _$loginWithEmailAsyncAction =
+      AsyncAction('_LoginControllerBase.loginWithEmail');
+
+  @override
+  Future<dynamic> loginWithEmail() {
+    return _$loginWithEmailAsyncAction.run(() => super.loginWithEmail());
+  }
+
+  final _$_LoginControllerBaseActionController =
+      ActionController(name: '_LoginControllerBase');
+
+  @override
+  dynamic changeEmail(String value) {
+    final _$actionInfo = _$_LoginControllerBaseActionController.startAction(
+        name: '_LoginControllerBase.changeEmail');
+    try {
+      return super.changeEmail(value);
+    } finally {
+      _$_LoginControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic changeSenha(String value) {
+    final _$actionInfo = _$_LoginControllerBaseActionController.startAction(
+        name: '_LoginControllerBase.changeSenha');
+    try {
+      return super.changeSenha(value);
+    } finally {
+      _$_LoginControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
-loading: ${loading}
+loading: ${loading},
+usuario: ${usuario},
+senha: ${senha},
+validateButtom: ${validateButtom}
     ''';
   }
 }

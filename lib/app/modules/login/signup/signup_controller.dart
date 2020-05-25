@@ -69,7 +69,6 @@ abstract class _SignupControllerBase with Store {
 
   FirebaseAuth _auth = FirebaseAuth.instance;
   Map<String, dynamic> userData = Map();
-  FirebaseUser firebaseUser;
   AuthResult firebaseAuth;
   Firestore db = Firestore.instance;
 

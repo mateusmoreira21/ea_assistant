@@ -39,6 +39,15 @@ mixin _$AuthController on _AuthControllerBase, Store {
     });
   }
 
+  final _$loginWithEmailAsyncAction =
+      AsyncAction('_AuthControllerBase.loginWithEmail');
+
+  @override
+  Future<dynamic> loginWithEmail(String usuario, String senha) {
+    return _$loginWithEmailAsyncAction
+        .run(() => super.loginWithEmail(usuario, senha));
+  }
+
   final _$loginWithGoogleAsyncAction =
       AsyncAction('_AuthControllerBase.loginWithGoogle');
 
