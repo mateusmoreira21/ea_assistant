@@ -49,21 +49,8 @@ abstract class _LoginControllerBase with Store {
   }
 
   @action
-  Future loginWithEmail() async {
-    try {
-      loading = true;
-      FirebaseUser user = await auth.loginWithEmail(this.usuario, this.senha);
-      if (user != null) {
-        Modular.to.pushReplacementNamed('/home');
-      }
-      print('logado em ${user.uid}');
-    } catch (e) {
-      loading = false;
-      print("Error: ${e.toString()}");
-      Scaffold.of(e).showSnackBar(SnackBar(
-        content: Text("Falha ao realizar o login"),
-        backgroundColor: Colors.redAccent,
-      ));
-    }
+  Future loginWithEmail(context) async {
+    FirebaseUser user =
+        await auth.loginWithEmail(context, this.usuario, this.senha);
   }
 }

@@ -170,7 +170,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                                   ),
                                   onPressed: controller.validateButtom
                                       ? () {
-                                          controller.loginWithEmail();
+                                          controller.loginWithEmail(context);
                                         }
                                       : null,
                                 ),

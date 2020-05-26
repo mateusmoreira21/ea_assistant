@@ -74,8 +74,8 @@ mixin _$LoginController on _LoginControllerBase, Store {
       AsyncAction('_LoginControllerBase.loginWithEmail');
 
   @override
-  Future<dynamic> loginWithEmail() {
-    return _$loginWithEmailAsyncAction.run(() => super.loginWithEmail());
+  Future<dynamic> loginWithEmail(dynamic context) {
+    return _$loginWithEmailAsyncAction.run(() => super.loginWithEmail(context));
   }
 
   final _$_LoginControllerBaseActionController =

@@ -1,5 +1,7 @@
 import 'package:ea_assistant/app/shared/auth/repositories/auth_repository_interface.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -8,7 +10,8 @@ class AuthRepository implements IAuthRepository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
-  Future<AuthResult> getEmailPasswordLogin(String usuario, String senha) async {
+  Future<AuthResult> getEmailPasswordLogin(
+      BuildContext context, String usuario, String senha) async {
     try {
       AuthResult user = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: usuario, password: senha);
@@ -16,8 +19,12 @@ class AuthRepository implements IAuthRepository {
         Modular.to.pushReplacementNamed('/home');
       }
       print('logado em ${user.user.uid}');
-    } catch (user) {
-      print("Error: ${user.toString()}");
+    } catch (e) {
+      print("Error: ${e.toString()}");
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text("Falha ao realizar o login"),
+        backgroundColor: Colors.redAccent,
+      ));
     }
   }
 
