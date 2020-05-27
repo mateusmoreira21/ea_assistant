@@ -9,14 +9,6 @@ part of 'login_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$LoginController on _LoginControllerBase, Store {
-  Computed<bool> _$validateButtomComputed;
-
-  @override
-  bool get validateButtom =>
-      (_$validateButtomComputed ??= Computed<bool>(() => super.validateButtom,
-              name: '_LoginControllerBase.validateButtom'))
-          .value;
-
   final _$loadingAtom = Atom(name: '_LoginControllerBase.loading');
 
   @override
@@ -108,8 +100,7 @@ mixin _$LoginController on _LoginControllerBase, Store {
     return '''
 loading: ${loading},
 usuario: ${usuario},
-senha: ${senha},
-validateButtom: ${validateButtom}
+senha: ${senha}
     ''';
   }
 }

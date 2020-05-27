@@ -15,7 +15,7 @@ bool _showPassword = false;
 
 class _LoginPageState extends ModularState<LoginPage, LoginController> {
   //use 'controller' variable to access controller
-
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -141,7 +141,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 onPressed: () {
-                                  // Recuperar a senha
+                                  Navigator.pushNamed(context, '/login/reset');
                                 },
                                 padding: EdgeInsets.zero,
                               )),
@@ -159,21 +159,18 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                                   color: Colors.deepPurple[900]),
                               child: Builder(
                                 builder: (context) => MaterialButton(
-                                  child: SizedBox(
-                                    width: double.infinity,
-                                    child: Text("Login",
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        textAlign: TextAlign.center),
-                                  ),
-                                  onPressed: controller.validateButtom
-                                      ? () {
-                                          controller.loginWithEmail(context);
-                                        }
-                                      : null,
-                                ),
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      child: Text("Login",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                          textAlign: TextAlign.center),
+                                    ),
+                                    onPressed: () {
+                                      controller.loginWithEmail(context);
+                                    }),
                               ),
                             )),
                         SizedBox(

@@ -1,6 +1,5 @@
 import 'package:ea_assistant/app/shared/auth/auth_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:string_validator/string_validator.dart';
@@ -24,11 +23,6 @@ abstract class _LoginControllerBase with Store {
   String senha = '';
   @action
   changeSenha(String value) => senha = value;
-
-  @computed
-  bool get validateButtom {
-    return validateEmail() == null;
-  }
 
   String validateEmail() {
     if (isEmail(this.usuario) == false) {
