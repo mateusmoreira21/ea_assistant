@@ -1,4 +1,5 @@
 import 'package:ea_assistant/app/app_controller.dart';
+import 'package:ea_assistant/app/modules/fornecedor/fornecedor_module.dart';
 import 'package:ea_assistant/app/modules/login/login_module.dart';
 import 'package:ea_assistant/app/shared/auth/auth_controller.dart';
 import 'package:ea_assistant/app/shared/auth/repositories/auth_repository.dart';
@@ -21,7 +22,8 @@ class AppModule extends MainModule {
   List<Router> get routers => [
         Router('/', child: (_, args) => SplashPage()),
         Router('/login', module: LoginModule()),
-        Router('/home', module: HomeModule())
+        Router('/home', module: HomeModule()),
+        Router('/home/fornecedor', module: FornecedorModule())
       ];
 
   @override

@@ -40,8 +40,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                     child: GestureDetector(
                       onTap: () {
                         if (index == 1)
-                          return 0;
-                        // pagina 1
+                          Navigator.pushNamed(context, '/home/fornecedor');
                         else if (index == 3)
                           return 0;
                         // pagina 2
@@ -53,7 +52,8 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                           SizedBox(
                               height:
                                   MediaQuery.of(context).size.height * 0.01),
-                          Image.asset(controller.images()[index], height: 50, width: 50),
+                          Image.asset(controller.images()[index],
+                              height: 50, width: 50),
                           Padding(
                             padding: EdgeInsets.all(20),
                             child: Text(
