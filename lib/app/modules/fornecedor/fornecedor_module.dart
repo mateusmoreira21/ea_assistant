@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ea_assistant/app/modules/fornecedor/cadastroFornecedor/cadastroFornecedor_module.dart';
 import 'package:ea_assistant/app/modules/fornecedor/fornecedor_controller.dart';
 import 'package:ea_assistant/app/modules/fornecedor/repositories/fornecedor_repository.dart';
 import 'package:ea_assistant/app/modules/fornecedor/repositories/fornecedor_repository_interface.dart';
@@ -11,12 +12,12 @@ class FornecedorModule extends ChildModule {
         Bind((i) => FornecedorController(i.get())),
         Bind<IFornecedorRespository>(
             (i) => FornecedorRepository(Firestore.instance)),
-            
       ];
 
   @override
   List<Router> get routers => [
         Router(Modular.initialRoute, child: (_, args) => FornecedorPage()),
+        Router('/cadastro', module: CadastroFornecedorModule()),
       ];
 
   static Inject get to => Inject<FornecedorModule>.of();

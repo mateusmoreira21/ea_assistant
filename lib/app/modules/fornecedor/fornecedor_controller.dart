@@ -1,5 +1,4 @@
 import 'package:ea_assistant/app/modules/fornecedor/models/fornecedor_model.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:ea_assistant/app/modules/fornecedor/repositories/fornecedor_repository_interface.dart';
 import 'package:mobx/mobx.dart';
 

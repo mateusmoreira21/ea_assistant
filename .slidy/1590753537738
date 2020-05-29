@@ -1,0 +1,5 @@
+lib/app/modules/fornecedor/cadastroFornecedor/cadastroFornecedor_module.dart
+lib/app/modules/fornecedor/cadastroFornecedor/cadastroFornecedor_page.dart
+test/app/modules/fornecedor/cadastroFornecedor/cadastroFornecedor_page_test.dart
+lib/app/modules/fornecedor/cadastroFornecedor/cadastroFornecedor_controller.dart
+test/app/modules/fornecedor/cadastroFornecedor/cadastroFornecedor_controller_test.dart

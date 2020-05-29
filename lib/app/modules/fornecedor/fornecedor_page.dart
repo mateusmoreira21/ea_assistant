@@ -19,7 +19,7 @@ class _FornecedorPageState
   //use 'controller' variable to access controller
   final auth = Modular.get<AuthController>();
 
-  @override  
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -32,7 +32,7 @@ class _FornecedorPageState
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.deepPurpleAccent,
-          onPressed: () {},
+          onPressed: _showDialog,
           child: Icon(
             Icons.add,
           ),
@@ -53,22 +53,19 @@ class _FornecedorPageState
           }
 
           List<FornecedorModel> list = controller.fornecedorList.data;
-          
-          
-            
-            return ListView.builder(
+
+          return ListView.builder(
               padding: EdgeInsets.only(bottom: 80, left: 10, right: 10),
               itemCount: list.length,
               itemBuilder: (_, index) {
                 FornecedorModel model = list[index];
 
                 print(auth.user.uid);
-                if (model.id != auth.user.uid || auth.user.uid == null) { 
+                if (model.id != auth.user.uid || auth.user.uid == null) {
                   return Center(
-                child: Text('Sem Fornecedores'),
-                );
-              } else {
-                  
+                    child: Text('Sem Fornecedores'),
+                  );
+                } else {
                   return ListTile(
                       leading: Icon(
                         Icons.account_circle,
@@ -83,19 +80,49 @@ class _FornecedorPageState
                           IconButton(
                               color: Colors.green,
                               icon: const Icon(Icons.edit),
-                              onPressed: () {}),
+                              onPressed: () {
+                                _showDialog(model);
+                              }),
                           IconButton(
                               color: Colors.red,
                               icon: const Icon(Icons.delete),
                               onPressed: () {})
                         ],
                       ));
-              }
-            }
-          );
-          
-        }
-      )
-    );
+                }
+              });
+        }));
+  }
+
+  _showDialog([FornecedorModel editModel]) {
+    editModel ??= FornecedorModel();
+    showDialog(
+        context: context,
+        builder: (_) {
+          return Scaffold(
+              appBar: AppBar(
+                  title: Text(editModel.id.isEmpty
+                      ? 'Adicionar Fornecedor'
+                      : 'Editar Fornecedor')),
+              body: ListView.builder(
+                itemBuilder: (_, index) {
+                  return TextFormField(
+                    initialValue: editModel.nomeFantasia,
+                    onChanged: (value) => editModel.nomeFantasia = value,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Nome Fantasia',
+                    ),
+                  );
+                },
+              ),
+              bottomSheet: FlatButton(
+                onPressed: () async {
+                  // await editModel.saveEdit();
+                  Modular.to.pop();
+                },
+                child: Text('Atualizar'),
+              ));
+        });
   }
 }
