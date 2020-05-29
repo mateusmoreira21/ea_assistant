@@ -90,8 +90,6 @@ abstract class _SignupControllerBase with Store {
 
   void recoverPass() {}
 
-  // Salvar dados de Cadastro no banco NAO FUNCIONA AINDA
-
   Future<void> _saveUserData(Map<String, dynamic> userData) async {
     await db
         .collection("users")

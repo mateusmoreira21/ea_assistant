@@ -1,5 +1,6 @@
 import 'package:ea_assistant/app/modules/fornecedor/fornecedor_module.dart';
 import 'package:ea_assistant/app/modules/home/home_controller.dart';
+import 'package:ea_assistant/app/shared/auth/repositories/auth_repository.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:ea_assistant/app/modules/home/home_page.dart';
 
@@ -7,6 +8,7 @@ class HomeModule extends ChildModule {
   @override
   List<Bind> get binds => [
         Bind((i) => HomeController()),
+        Bind((i) => AuthRepository())
       ];
 
   @override

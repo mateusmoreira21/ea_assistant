@@ -6,6 +6,7 @@ class FornecedorRepository implements IFornecedorRespository {
   final Firestore firestore;
 
   FornecedorRepository(this.firestore);
+  
 
   @override
   Stream<List<FornecedorModel>> getTodos() {

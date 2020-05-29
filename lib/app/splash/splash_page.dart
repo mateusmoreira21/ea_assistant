@@ -4,7 +4,6 @@ import 'package:mobx/mobx.dart';
 
 import '../animation/FadeAnimation.dart';
 import '../shared/auth/auth_controller.dart';
-import '../shared/auth/auth_controller.dart';
 
 class SplashPage extends StatefulWidget {
   @override

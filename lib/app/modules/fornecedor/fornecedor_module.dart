@@ -11,6 +11,7 @@ class FornecedorModule extends ChildModule {
         Bind((i) => FornecedorController(i.get())),
         Bind<IFornecedorRespository>(
             (i) => FornecedorRepository(Firestore.instance)),
+            
       ];
 
   @override

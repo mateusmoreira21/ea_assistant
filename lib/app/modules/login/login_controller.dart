@@ -1,5 +1,6 @@
 import 'package:ea_assistant/app/shared/auth/auth_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:string_validator/string_validator.dart';
@@ -10,6 +11,9 @@ class LoginController = _LoginControllerBase with _$LoginController;
 
 abstract class _LoginControllerBase with Store {
   AuthController auth = Modular.get();
+  
+  @observable
+  FirebaseUser currentUser;
 
   @observable
   bool loading = false;
@@ -44,7 +48,19 @@ abstract class _LoginControllerBase with Store {
 
   @action
   Future loginWithEmail(context) async {
-    FirebaseUser user =
-        await auth.loginWithEmail(context, this.usuario, this.senha);
+    try {
+      loading = true;
+      await auth.loginWithEmail(context, this.usuario, this.senha);
+      Modular.to.pushReplacementNamed('/home');
+    } catch (e) {
+      loading = false;
+      print("Error: ${e.toString()}");
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: Text("Falha ao realizar o login"),
+        backgroundColor: Colors.redAccent,
+      ));
+    }
   }
+
+  
 }

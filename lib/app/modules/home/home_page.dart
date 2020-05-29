@@ -1,6 +1,7 @@
 import 'package:ea_assistant/app/animation/FadeAnimation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:ea_assistant/app/shared/auth/auth_controller.dart';
 import 'home_controller.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,6 +14,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends ModularState<HomePage, HomeController> {
   //use 'controller' variable to access controller
+  final auth = Modular.get<AuthController>();
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,8 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
           backgroundColor: Colors.deepPurple,
           title: Text(widget.title),
           actions: <Widget>[
-            IconButton(icon: Icon(Icons.clear), onPressed: controller.logoff),
+            auth.user != null ?
+            IconButton(icon: Icon(Icons.clear), onPressed: controller.logoff) : Container(),
           ],
         ),
         body: Padding(

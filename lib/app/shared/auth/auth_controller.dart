@@ -23,10 +23,6 @@ abstract class _AuthControllerBase with Store {
     status = user == null ? AuthStatus.logoff : AuthStatus.login;
   }
 
-  getUser() {
-    return user.uid;
-  }
-
   _AuthControllerBase() {
     _authRepository.getUser().then(setUser);
   }
@@ -44,6 +40,10 @@ abstract class _AuthControllerBase with Store {
 
   Future logOut() {
     return _authRepository.getLogout();
+  }
+
+  getIdToken(){
+    return _authRepository.getToken();
   }
 }
 

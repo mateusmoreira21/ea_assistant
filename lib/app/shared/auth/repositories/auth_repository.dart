@@ -10,26 +10,19 @@ class AuthRepository implements IAuthRepository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
-  Future<AuthResult> getEmailPasswordLogin(
+  Future<FirebaseUser> getEmailPasswordLogin(
       BuildContext context, String usuario, String senha) async {
-    try {
-      AuthResult user = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: usuario, password: senha);
-      if (user != null) {
-        Modular.to.pushReplacementNamed('/home');
-      }
-      print('logado em ${user.user.uid}');
-    } catch (e) {
-      print("Error: ${e.toString()}");
-      Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text("Falha ao realizar o login"),
-        backgroundColor: Colors.redAccent,
-      ));
+        FirebaseAuth.instance.signOut();
+        FirebaseUser user = (await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: usuario, password: senha)).user;
+        print('logado em ${user.uid}');
+        return user;
     }
-  }
+  
 
   @override
   Future<FirebaseUser> getGoogleLogin() async {
+    FirebaseAuth.instance.signOut();
     final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     final GoogleSignInAuthentication googleAuth =
         await googleUser.authentication;
@@ -46,11 +39,6 @@ class AuthRepository implements IAuthRepository {
   }
 
   @override
-  Future<String> getToken() {
-    return null;
-  }
-
-  @override
   Future<FirebaseUser> getUser() {
     return _auth.currentUser();
   }
@@ -58,5 +46,10 @@ class AuthRepository implements IAuthRepository {
   @override
   Future getLogout() {
     return _auth.signOut();
+  }
+
+  @override
+  Future<String> getToken() {
+    return null;
   }
 }

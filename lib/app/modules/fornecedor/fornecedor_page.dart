@@ -1,6 +1,5 @@
-import 'package:ea_assistant/app/app_controller.dart';
-import 'package:ea_assistant/app/modules/fornecedor/models/fornecedor_model.dart';
 import 'package:ea_assistant/app/shared/auth/auth_controller.dart';
+import 'package:ea_assistant/app/modules/fornecedor/models/fornecedor_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -18,9 +17,9 @@ class FornecedorPage extends StatefulWidget {
 class _FornecedorPageState
     extends ModularState<FornecedorPage, FornecedorController> {
   //use 'controller' variable to access controller
-  final user = Modular.get<AuthController>();
+  final auth = Modular.get<AuthController>();
 
-  @override
+  @override  
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -54,13 +53,22 @@ class _FornecedorPageState
           }
 
           List<FornecedorModel> list = controller.fornecedorList.data;
-
-          return ListView.builder(
+          
+          
+            
+            return ListView.builder(
               padding: EdgeInsets.only(bottom: 80, left: 10, right: 10),
               itemCount: list.length,
               itemBuilder: (_, index) {
                 FornecedorModel model = list[index];
-                if (model.id == user.getUser()) {
+
+                print(auth.user.uid);
+                if (model.id != auth.user.uid || auth.user.uid == null) { 
+                  return Center(
+                child: Text('Sem Fornecedores'),
+                );
+              } else {
+                  
                   return ListTile(
                       leading: Icon(
                         Icons.account_circle,
@@ -82,8 +90,12 @@ class _FornecedorPageState
                               onPressed: () {})
                         ],
                       ));
-                }
-              });
-        }));
+              }
+            }
+          );
+          
+        }
+      )
+    );
   }
 }
