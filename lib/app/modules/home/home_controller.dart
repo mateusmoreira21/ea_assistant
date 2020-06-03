@@ -14,12 +14,10 @@ abstract class _HomeControllerBase with Store {
 
   services() {
     return [
-      "Cadastro de Mei",
+      "Meus Dados",
       "Fornecedores",
       "Dashboard",
       "Lançamentos",
-      "Editar Dados",
-      "OCR"
     ];
   }
 
@@ -29,9 +27,6 @@ abstract class _HomeControllerBase with Store {
       "lib/app/images/icons/fornecedor.png",
       "lib/app/images/icons/dashboard.png",
       "lib/app/images/icons/lancamento.png",
-      "lib/app/images/icons/config.png",
-      "lib/app/images/icons/scan.png",
     ];
   }
-
 }

@@ -26,11 +26,9 @@ class _FornecedorPageState
           backgroundColor: Colors.deepPurpleAccent,
           centerTitle: true,
           title: Text(widget.title),
-          actions: <Widget>[
-            IconButton(icon: Icon(Icons.search), onPressed: () {
-              
-            }),
-          ],
+          // actions: <Widget>[
+          //   IconButton(icon: Icon(Icons.search), onPressed: () {}),
+          // ],
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.deepPurpleAccent,
@@ -102,88 +100,111 @@ class _FornecedorPageState
         context: context,
         builder: (_) {
           return Scaffold(
-              appBar: AppBar(
-                  title: Text(editModel.id.isEmpty
-                      ? 'Adicionar Fornecedor'
-                      : 'Editar Fornecedor')),
-              body: Card(
-                  child: ListView(
-                padding: EdgeInsets.only(left: 10, right: 10, top: 10),
-                children: <Widget>[
-                  TextFormField(
-                    initialValue: editModel.razaoSocial,
-                    onChanged: (value) => editModel.razaoSocial = value,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Razão Social',
+            appBar: AppBar(
+                backgroundColor: Colors.deepPurple,
+                title: Text(editModel.id.isEmpty
+                    ? 'Adicionar Fornecedor'
+                    : 'Editar Fornecedor')),
+            body: Card(
+                child: ListView(
+              padding: EdgeInsets.only(left: 10, right: 10, top: 10),
+              children: <Widget>[
+                TextFormField(
+                  initialValue: editModel.razaoSocial,
+                  onChanged: (value) => editModel.razaoSocial = value,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Razão Social',
+                  ),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                TextFormField(
+                  initialValue: editModel.nomeFantasia,
+                  onChanged: (value) => editModel.nomeFantasia = value,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Nome Fantasia',
+                  ),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                TextFormField(
+                  initialValue: editModel.cnpj,
+                  onChanged: (value) => editModel.cnpj = value,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'CNPJ',
+                  ),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                TextFormField(
+                  initialValue: editModel.cep,
+                  onChanged: (value) => editModel.cep = value,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'CEP',
+                  ),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                TextFormField(
+                  initialValue: editModel.estado,
+                  onChanged: (value) => editModel.estado = value,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Estado',
+                  ),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                TextFormField(
+                  initialValue: editModel.cidade,
+                  onChanged: (value) => editModel.cidade = value,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Cidade',
+                  ),
+                ),
+                SizedBox(
+                  height: 70,
+                ),
+                Container(
+                  height: 50,
+                  margin: EdgeInsets.symmetric(horizontal: 50),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      color: Colors.deepPurple),
+                  child: Builder(
+                    builder: (context) => MaterialButton(
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: Text(
+                            editModel.id.isEmpty
+                                ? 'Adicionar Novo Fornecedor'
+                                : 'Atualizar Fornecedor',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center),
+                      ),
+                      onPressed: () async {
+                        await editModel.save();
+                        Modular.to.pop();
+                      },
                     ),
                   ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  TextFormField(
-                    initialValue: editModel.nomeFantasia,
-                    onChanged: (value) => editModel.nomeFantasia = value,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Nome Fantasia',
-                    ),
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  TextFormField(
-                    initialValue: editModel.cnpj,
-                    onChanged: (value) => editModel.cnpj = value,
-                    decoration: InputDecoration(                      
-                      border: OutlineInputBorder(),
-                      labelText: 'CNPJ',
-                    ),
-                  ), 
-                  SizedBox(
-                    height: 12,
-                  ),
-                  TextFormField(
-                    initialValue: editModel.cep,
-                    onChanged: (value) => editModel.cep = value,
-                    decoration: InputDecoration(                      
-                      border: OutlineInputBorder(),
-                      labelText: 'CEP',
-                    ),
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  TextFormField(
-                    initialValue: editModel.estado,
-                    onChanged: (value) => editModel.estado = value,
-                    decoration: InputDecoration(                      
-                      border: OutlineInputBorder(),
-                      labelText: 'Estado',
-                    ),
-                  ), 
-                  SizedBox(
-                    height: 12,
-                  ),
-                  TextFormField(
-                    initialValue: editModel.cidade,
-                    onChanged: (value) => editModel.cidade = value,
-                    decoration: InputDecoration(                      
-                      border: OutlineInputBorder(),
-                      labelText: 'Cidade',
-                    ),
-                  ), 
-                ],
-              )),
-              bottomSheet: FlatButton(
-                onPressed: () async {
-                  await editModel.save();
-                  Modular.to.pop();
-                },
-                child: Text(editModel.id.isEmpty
-                      ? 'Adicionar Novo Fornecedor'
-                      : 'Atualizar Fornecedor'),
-              ));
+                ),
+              ],
+            )),
+          );
         });
   }
 }
