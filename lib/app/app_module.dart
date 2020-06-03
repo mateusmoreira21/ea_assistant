@@ -1,5 +1,6 @@
 import 'package:ea_assistant/app/app_controller.dart';
 import 'package:ea_assistant/app/modules/fornecedor/fornecedor_module.dart';
+import 'package:ea_assistant/app/modules/lancamentos/lancamentos_module.dart';
 import 'package:ea_assistant/app/modules/login/login_module.dart';
 import 'package:ea_assistant/app/shared/auth/auth_controller.dart';
 import 'package:ea_assistant/app/shared/auth/repositories/auth_repository.dart';
@@ -23,7 +24,8 @@ class AppModule extends MainModule {
         Router('/', child: (_, args) => SplashPage()),
         Router('/login', module: LoginModule()),
         Router('/home', module: HomeModule()),
-        Router('/home/fornecedor', module: FornecedorModule())
+        Router('/home/fornecedor', module: FornecedorModule()),
+        Router('/home/lancamentos', module: LancamentosModule())
       ];
 
   @override

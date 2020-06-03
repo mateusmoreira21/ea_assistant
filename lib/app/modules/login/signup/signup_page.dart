@@ -1,10 +1,7 @@
 import 'package:ea_assistant/app/animation/FadeAnimation.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mobx/mobx.dart';
-import 'package:the_validator/the_validator.dart';
 import 'signup_controller.dart';
 
 class SignupPage extends StatefulWidget {
@@ -19,7 +16,7 @@ class _SignupPageState extends ModularState<SignupPage, SignupController> {
   //use 'controller' variable to access controller
   bool _showPassword = false;
   final _formKey = GlobalKey<FormState>();
-  var _passController;
+
 
   @override
   Widget build(BuildContext context) {
@@ -186,7 +183,7 @@ class _SignupPageState extends ModularState<SignupPage, SignupController> {
                                     ),
                                   ),
                                   onPressed: () {
-                                    Modular.to.pushReplacementNamed('/home');
+                                    Modular.to.pushReplacementNamed('/login');
                                   },
                                 ),
                               ),

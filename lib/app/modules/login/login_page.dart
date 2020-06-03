@@ -263,7 +263,7 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                                 ),
                                 padding: EdgeInsets.zero,
                                 onPressed: () {
-                                  Navigator.pushNamed(context, '/login/signup');
+                                  Modular.to.pushReplacementNamed('/login/signup');
                                 },
                               ),
                             ],

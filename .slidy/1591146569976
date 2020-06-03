@@ -1,0 +1,5 @@
+lib/app/modules/lancamentos/lancamentos_module.dart
+lib/app/modules/lancamentos/lancamentos_page.dart
+test/app/modules/lancamentos/lancamentos_page_test.dart
+lib/app/modules/lancamentos/lancamentos_controller.dart
+test/app/modules/lancamentos/lancamentos_controller_test.dart

@@ -3,7 +3,6 @@ import 'package:ea_assistant/app/modules/fornecedor/models/fornecedor_model.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:mobx/mobx.dart';
 
 class CadastroFornecedorPage extends StatefulWidget {
   final String title;

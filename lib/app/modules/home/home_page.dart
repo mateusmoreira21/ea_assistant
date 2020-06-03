@@ -45,9 +45,9 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                         if (index == 1)
                           Navigator.pushNamed(context, '/home/fornecedor');
                         else if (index == 3)
-                          return 0;
+                          Navigator.pushNamed(context, 'home/lancamentos');
                         // pagina 2
-                        else if (index == 0) return 0;
+                        else if (index == 0) return null;
                         // pagina 3
                       },
                       child: Column(
