@@ -48,23 +48,6 @@ class FornecedorModel {
         complemento: doc['complemento']);
   }
 
-  // Map<String, dynamic> getMap() {
-  //   var map = new Map<String, dynamic>();
-  //   map['razao social'] = this.razaoSocial;
-  //   map['nome fantasia'] = this.nomeFantasia;
-  //   map['cnpj'] = this.cnpj;
-  //   map['id'] = id;
-  //   map['cep'] = cep;
-  //   map['UF'] = estado;
-  //   map['cidade'] = cidade;
-  //   map['bairro'] = bairro;
-  //   map['logradouro'] = logradouro;
-  //   map['numero'] = numero;
-  //   map['complemento'] = complemento;
-
-  //   return map;
-  // }
-
   Future save() async {
     if (reference == null) {
       Firestore.instance.collection('fornecedores').add({

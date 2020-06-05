@@ -9,18 +9,19 @@ part of 'lancamentos_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$LancamentosController on _LancamentosControllerBase, Store {
-  final _$valueAtom = Atom(name: '_LancamentosControllerBase.value');
+  final _$lancamentosListAtom =
+      Atom(name: '_LancamentosControllerBase.lancamentosList');
 
   @override
-  int get value {
-    _$valueAtom.reportRead();
-    return super.value;
+  ObservableStream<List<LancamentosModel>> get lancamentosList {
+    _$lancamentosListAtom.reportRead();
+    return super.lancamentosList;
   }
 
   @override
-  set value(int value) {
-    _$valueAtom.reportWrite(value, super.value, () {
-      super.value = value;
+  set lancamentosList(ObservableStream<List<LancamentosModel>> value) {
+    _$lancamentosListAtom.reportWrite(value, super.lancamentosList, () {
+      super.lancamentosList = value;
     });
   }
 
@@ -28,11 +29,11 @@ mixin _$LancamentosController on _LancamentosControllerBase, Store {
       ActionController(name: '_LancamentosControllerBase');
 
   @override
-  void increment() {
+  dynamic getListLancamentos() {
     final _$actionInfo = _$_LancamentosControllerBaseActionController
-        .startAction(name: '_LancamentosControllerBase.increment');
+        .startAction(name: '_LancamentosControllerBase.getListLancamentos');
     try {
-      return super.increment();
+      return super.getListLancamentos();
     } finally {
       _$_LancamentosControllerBaseActionController.endAction(_$actionInfo);
     }
@@ -41,7 +42,7 @@ mixin _$LancamentosController on _LancamentosControllerBase, Store {
   @override
   String toString() {
     return '''
-value: ${value}
+lancamentosList: ${lancamentosList}
     ''';
   }
 }

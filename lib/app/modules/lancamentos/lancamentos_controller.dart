@@ -1,3 +1,5 @@
+import 'package:ea_assistant/app/modules/lancamentos/model/lancamentos_model.dart';
+import 'package:ea_assistant/app/modules/lancamentos/repositories/lancamentos_repository_interface.dart';
 import 'package:mobx/mobx.dart';
 
 part 'lancamentos_controller.g.dart';
@@ -6,11 +8,17 @@ class LancamentosController = _LancamentosControllerBase
     with _$LancamentosController;
 
 abstract class _LancamentosControllerBase with Store {
+  final ILancamentosRepository response;
+
   @observable
-  int value = 0;
+  ObservableStream<List<LancamentosModel>> lancamentosList;
+
+  _LancamentosControllerBase(this.response) {
+    getListLancamentos();
+  }
 
   @action
-  void increment() {
-    value++;
+  getListLancamentos() {
+    lancamentosList = response.getTodosLancamentos().asObservable();
   }
 }
