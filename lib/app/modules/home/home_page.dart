@@ -23,9 +23,34 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
           backgroundColor: Colors.deepPurple,
           title: Text(widget.title),
           actions: <Widget>[
-            auth.user != null ?
-            IconButton(icon: Icon(Icons.clear), onPressed: controller.logoff) : Container(),
+            auth.user != null
+                ? IconButton(
+                    icon: Icon(Icons.clear), onPressed: controller.logoff)
+                : Container(),
           ],
+        ),
+        drawer: Drawer(
+          child: ListView(
+            children: <Widget>[
+              DrawerHeader(
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(colors: <Color>[
+                    Colors.deepPurple[700],
+                    Colors.deepPurple[600],
+                    Colors.blueAccent
+                  ])),
+                  child: CircleAvatar(
+                      backgroundColor: Colors.white70,
+                      child: Icon(
+                        Icons.supervised_user_circle,
+                        size: 100,
+                      ))),
+              CustomListTile("Editar Minhas Informações", Icons.business,
+                  "editar", context),
+              CustomListTile("Sobre", Icons.info, "sobre", context),
+              CustomListTile("Logout", Icons.lock, "logout", context)
+            ],
+          ),
         ),
         body: Padding(
           padding: EdgeInsets.all(8),
@@ -46,9 +71,8 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                           Navigator.pushNamed(context, '/home/fornecedor');
                         else if (index == 3)
                           Navigator.pushNamed(context, 'home/lancamentos');
-                        // pagina 2
                         else if (index == 0) return null;
-                        // pagina 3
+                        Navigator.pushNamed(context, 'home/dashboard');
                       },
                       child: Column(
                         children: <Widget>[
@@ -77,5 +101,47 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                 );
               }),
         ));
+  }
+
+  CustomListTile(
+      String texto, IconData icon, String pagina, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 0),
+      child: Container(
+        decoration: BoxDecoration(
+            border: Border(bottom: BorderSide(color: Colors.grey.shade400))),
+        child: InkWell(
+          splashColor: Colors.redAccent,
+          onTap: () {
+            if (pagina == "editar") {}
+            if (pagina == "logout") {
+              controller.logoff();
+            }
+            if (pagina == "sobre") {
+              Navigator.pushNamed(context, 'home/sobre');
+            }
+          },
+          child: Container(
+            height: 50,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Row(children: <Widget>[
+                  Icon(
+                    icon,
+                    color: Colors.deepPurple,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(texto, style: TextStyle(fontSize: 15.0)),
+                  ),
+                ]),
+                Icon(Icons.arrow_right),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
