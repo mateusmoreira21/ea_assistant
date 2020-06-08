@@ -4,10 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ea_assistant/app/animation/FadeAnimation.dart';
 import 'package:ea_assistant/app/modules/lancamentos/model/lancamentos_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'lancamentos_controller.dart';
-
+import 'package:intl/intl.dart';
 
 class LancamentosPage extends StatefulWidget {
   final String title;
@@ -21,14 +22,13 @@ class LancamentosPage extends StatefulWidget {
 class _LancamentosPageState
     extends ModularState<LancamentosPage, LancamentosController> {
   //use 'controller' variable to access controller
-  
 
-    Future retornaFuture() async {
+  Future retornaFuture() async {
     var firestore = Firestore.instance;
     QuerySnapshot qn;
     if (dataInicial != null) {
       qn = await firestore
-          .collection("lancamento")
+          .collection("lancamentos")
           .where("date",
               isGreaterThanOrEqualTo: Timestamp.fromDate(dataInicial))
           .where("date",
@@ -36,7 +36,7 @@ class _LancamentosPageState
           .getDocuments();
     } else {
       qn = await firestore
-          .collection("lancamento")
+          .collection("lancamentos")
           .where("date", isLessThanOrEqualTo: Timestamp.fromDate(dataAtual))
           .getDocuments();
     }
@@ -47,7 +47,6 @@ class _LancamentosPageState
   List<LancamentosModel> items;
   var db = Firestore.instance;
   StreamSubscription<QuerySnapshot> lancamentoInscricao;
-  
   @override
   void initState() {
     dataInicial = new DateTime(dataAtual.year, (dataAtual.month), 1, 0);
@@ -58,6 +57,24 @@ class _LancamentosPageState
     calendarController = CalendarController();
     items = List();
     lancamentoInscricao?.cancel();
+
+    lancamentoInscricao = db
+        .collection("lancamentos")
+        .where("date", isGreaterThanOrEqualTo: Timestamp.fromDate(data))
+        .where("date", isLessThan: Timestamp.fromDate(dataAtual))
+        .snapshots()
+        .listen((snapshot) {
+      final List<LancamentosModel> lancamentos = snapshot.documents
+          .map(
+            (documentSnapshot) => LancamentosModel.fromMap(
+                documentSnapshot.data, documentSnapshot.documentID),
+          )
+          .toList();
+      setState(() {
+        this.items = lancamentos;
+        print(items.length);
+      });
+    });
   }
 
   @override
@@ -66,26 +83,17 @@ class _LancamentosPageState
     super.dispose();
   }
 
-  var lista = [
-    "Aluguel",
-    "Venda de Produto",
-    "Conta de luz",
-  ];
-  var cor = [
-    false,
-    true,
-    false,
-  ];
   var dataAtual = new DateTime.now();
-
-  var data = DateTime.parse("2020-03-01 12:00:00.000Z");
-
-  CalendarController calendarController;
-  String dataFormatada;
   var dataInicial;
   DateTime dataFinal;
 
-  
+  var data = DateTime.parse("2020-03-01 12:00:00.000Z");
+
+  var formatter = new DateFormat('dd-MM-yyyy');
+  var formatterCalendar = new DateFormat('MM-yyyy');
+  CalendarController calendarController;
+  String dataFormatada;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,7 +128,7 @@ class _LancamentosPageState
                   dataInicial = dateFirst;
                   dataFinal = dateLast;
                 });
-
+                dataFormatada = formatterCalendar.format(dateFirst);
                 // _allMovMes(dataFormatada);
 
                 print("DATA FORMATADA CALENDAR $dataFormatada");
@@ -146,17 +154,17 @@ class _LancamentosPageState
                           child: CircularProgressIndicator(),
                         );
                       default:
-                        List<LancamentosModel> lancamentos =
-                            controller.lancamentosList.data;
+                        List<DocumentSnapshot> documentos =
+                            snapshot.data.documents;
                         return ListView.builder(
                           padding: EdgeInsets.only(
                               top: 0, left: 10, right: 10, bottom: 80),
-                          itemCount: lancamentos.length,
+                          itemCount: snapshot.data.documents.length,
                           itemBuilder: (BuildContext context, int index) {
                             return FadeAnimation(
                               0.4,
                               Card(
-                                color: controller.lancamentosList.data.documents[index]["tipo"] ==
+                                color: snapshot.data.documents[index]["tipo"] ==
                                         false
                                     ? Colors.red[300]
                                     : Colors.green,

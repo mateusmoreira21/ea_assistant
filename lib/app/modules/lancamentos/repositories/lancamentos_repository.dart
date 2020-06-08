@@ -10,8 +10,13 @@ class LancamentosRepository implements ILancamentosRepository {
   LancamentosRepository(this.firestore);
 
   @override
-  Stream<List<LancamentosModel>> getTodosLancamentos() {
-    return firestore.collection('lancamentos').where('id', isEqualTo: auth.user.uid).snapshots().map((query) {
+  Stream<List<LancamentosModel>> getTodosLancamentos(date) {
+    return firestore
+        .collection('lancamentos')
+        .where('id', isEqualTo: auth.user.uid)
+        .where("date", isLessThanOrEqualTo: Timestamp.fromDate(date))
+        .snapshots()
+        .map((query) {
       return query.documents.map((doc) {
         return LancamentosModel.fromDocument(doc);
       }).toList();
