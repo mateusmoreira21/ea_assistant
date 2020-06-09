@@ -14,18 +14,18 @@ abstract class _HomeControllerBase with Store {
 
   services() {
     return [
-      "Meus Dados",
-      "Fornecedores",
+      "Consultar NFCE na receita",
       "Dashboard",
+      "Fornecedores",
       "Lançamentos",
     ];
   }
 
   images() {
     return [
-      "lib/app/images/icons/mei.png",
-      "lib/app/images/icons/fornecedor.png",
+      "lib/app/images/icons/qrcode.png",
       "lib/app/images/icons/dashboard.png",
+      "lib/app/images/icons/fornecedor.png",
       "lib/app/images/icons/lancamento.png",
     ];
   }

@@ -3,6 +3,7 @@ import 'package:ea_assistant/app/modules/fornecedor/models/fornecedor_model.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'fornecedor_controller.dart';
 
 class FornecedorPage extends StatefulWidget {
@@ -26,9 +27,9 @@ class _FornecedorPageState
           backgroundColor: Colors.deepPurpleAccent,
           centerTitle: true,
           title: Text(widget.title),
-          // actions: <Widget>[
-          //   IconButton(icon: Icon(Icons.search), onPressed: () {}),
-          // ],
+          actions: <Widget>[
+            IconButton(icon: Icon(Icons.search), onPressed: () {}),
+          ],
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.deepPurpleAccent,
@@ -66,29 +67,77 @@ class _FornecedorPageState
                     child: Text('Sem Fornecedores'),
                   );
                 } else {
-                  return ListTile(
-                      leading: Icon(
-                        Icons.account_circle,
-                        size: 50,
-                        color: Colors.black,
-                      ),
-                      title: Text(model.nomeFantasia),
-                      subtitle: Text(model.cnpj),
-                      trailing: Wrap(
-                        spacing: 2,
-                        children: <Widget>[
-                          IconButton(
-                              color: Colors.green,
-                              icon: const Icon(Icons.edit),
-                              onPressed: () {
-                                _showDialog(model);
-                              }),
-                          IconButton(
-                              color: Colors.red,
-                              icon: const Icon(Icons.delete),
-                              onPressed: () {})
-                        ],
-                      ));
+                  return Card(
+                    child: InkWell(
+                      onTap: () {
+                        var alertStyle = AlertStyle(
+                            animationType: AnimationType.grow,
+                            isCloseButton: false,
+                            isOverlayTapDismiss: false,
+                            descStyle: TextStyle(fontWeight: FontWeight.bold),
+                            animationDuration: Duration(milliseconds: 200),
+                            alertBorder: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                              side: BorderSide(
+                                color: Colors.grey,
+                              ),
+                            ),
+                            titleStyle: TextStyle(
+                              fontSize: 18,
+                              color: Colors.black,
+                            ),
+                            constraints: BoxConstraints.expand());
+                        Alert(
+                          context: context,
+                          style: alertStyle,
+                          title: "Informações deste fornecedor",
+                          content: Column(
+                            children: <Widget>[
+                              getRowAlert(
+                                  "Razão social", "${model.razaoSocial}"),
+                              getRowAlert("Cnpj", "${model.cnpj}"),
+                              getRowAlert("Cidade", "${model.cidade}"),
+                            ],
+                          ),
+                          buttons: [
+                            DialogButton(
+                              child: Text(
+                                "Voltar",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                              ),
+                              onPressed: () => Navigator.pop(context),
+                              color: Color.fromRGBO(0, 179, 134, 1.0),
+                              radius: BorderRadius.circular(0.0),
+                            ),
+                          ],
+                        ).show();
+                      },
+                      child: ListTile(
+                          leading: Icon(
+                            Icons.account_circle,
+                            size: 50,
+                            color: Colors.black54,
+                          ),
+                          title: Text(model.nomeFantasia),
+                          subtitle: Text(model.cnpj),
+                          trailing: Wrap(
+                            spacing: 2,
+                            children: <Widget>[
+                              IconButton(
+                                  color: Colors.green,
+                                  icon: const Icon(Icons.edit),
+                                  onPressed: () {
+                                    _showDialog(model);
+                                  }),
+                              IconButton(
+                                  color: Colors.red,
+                                  icon: const Icon(Icons.delete),
+                                  onPressed: () {})
+                            ],
+                          )),
+                    ),
+                  );
                 }
               });
         }));
@@ -206,5 +255,24 @@ class _FornecedorPageState
             )),
           );
         });
+  }
+
+  getRowAlert(String primeiro, String segundo) {
+    return Row(
+      children: <Widget>[
+        Text(
+          "$primeiro: ",
+          style: TextStyle(fontSize: 16),
+          overflow: TextOverflow.fade,
+        ),
+        Flexible(
+          flex: 1,
+          child: Text(
+            "$segundo",
+            style: TextStyle(fontSize: 14, color: Colors.deepPurple),
+          ),
+        )
+      ],
+    );
   }
 }

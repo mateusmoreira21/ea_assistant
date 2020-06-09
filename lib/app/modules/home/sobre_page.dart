@@ -46,15 +46,26 @@ class _SobrePageState extends State<SobrePage> {
                 SizedBox(
                   height: 20,
                 ),
+                Text(
+                  "Nossa equipe:",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
+                      color: Colors.deepPurple),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
                 Column(children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      _RetornaFoto("MateusM.jpeg"),
+                      _RetornaFoto("MateusM.jpeg", "Mateus M."),
                       SizedBox(
                         width: 10,
                       ),
-                      _RetornaFoto("MatheusC.jpeg"),
+                      _RetornaFoto("MatheusC.jpeg", "Matheus C."),
                     ],
                   ),
                   SizedBox(
@@ -63,11 +74,11 @@ class _SobrePageState extends State<SobrePage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      _RetornaFoto("Ygor.jpg"),
+                      _RetornaFoto("Ygor.jpg", "Ygor S."),
                       SizedBox(
                         width: 10,
                       ),
-                      _RetornaFoto("Josue.jpeg"),
+                      _RetornaFoto("Josue.jpeg", "Josué O."),
                     ],
                   ),
                   SizedBox(
@@ -76,11 +87,11 @@ class _SobrePageState extends State<SobrePage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      _RetornaFoto("Italo.jpeg"),
+                      _RetornaFoto("Italo.jpeg", "Italo"),
                       SizedBox(
                         width: 10,
                       ),
-                      _RetornaFoto("gay.jpg"),
+                      _RetornaFoto("gay.jpg", "Arthur B."),
                     ],
                   ),
                 ]),
@@ -92,15 +103,31 @@ class _SobrePageState extends State<SobrePage> {
     );
   }
 
-  Widget _RetornaFoto(String nome) {
+  Widget _RetornaFoto(String foto, String nome) {
+    var altura = MediaQuery.of(context).size.height;
+    var largura = MediaQuery.of(context).size.width;
     return Container(
-        height: 150,
-        width: 150,
-        child: CircleAvatar(
-          radius: 50,
-          backgroundImage: AssetImage(
-            'lib/app/images/$nome',
-          ),
+        width: 100,
+        child: Column(
+          children: <Widget>[
+            CircleAvatar(
+              radius: 50,
+              backgroundImage: AssetImage(
+                'lib/app/images/$foto',
+              ),
+            ),
+            Card(
+              child: ListTile(
+                title: Text(
+                  "$nome",
+                  style: TextStyle(
+                      fontSize: altura * 0.025,
+                      color: Colors.deepPurple,
+                      fontWeight: FontWeight.w600),
+                ),
+              ),
+            )
+          ],
         ));
   }
 }

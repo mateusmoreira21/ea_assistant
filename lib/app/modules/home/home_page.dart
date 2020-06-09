@@ -59,20 +59,22 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
               gridDelegate: (SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 childAspectRatio: MediaQuery.of(context).size.width /
-                    (MediaQuery.of(context).size.height / 2.3),
+                    (MediaQuery.of(context).size.height / 2.0),
               )),
               itemBuilder: (BuildContext context, int index) {
                 return FadeAnimation(
                   1.2,
                   Card(
-                    child: GestureDetector(
+                    child: InkWell(
                       onTap: () {
-                        if (index == 1)
-                          Navigator.pushNamed(context, '/home/fornecedor');
+                        if (index == 0)
+                          Navigator.pushNamed(context, 'home/qrcode');
+                        else if (index == 1)
+                          Navigator.pushNamed(context, 'home/dashboard');
+                        else if (index == 2)
+                          Navigator.pushNamed(context, 'home/fornecedor');
                         else if (index == 3)
                           Navigator.pushNamed(context, 'home/lancamentos');
-                        else if (index == 0) return null;
-                        Navigator.pushNamed(context, 'home/dashboard');
                       },
                       child: Column(
                         children: <Widget>[
@@ -86,8 +88,8 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                             child: Text(
                               controller.services()[index],
                               style: TextStyle(
-                                  fontSize:
-                                      MediaQuery.of(context).size.height * 0.02,
+                                  fontSize: MediaQuery.of(context).size.height *
+                                      0.025,
                                   color: Colors.deepPurple,
                                   fontWeight: FontWeight.bold,
                                   height: 1.2),
@@ -111,7 +113,7 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
         decoration: BoxDecoration(
             border: Border(bottom: BorderSide(color: Colors.grey.shade400))),
         child: InkWell(
-          splashColor: Colors.redAccent,
+          splashColor: Colors.grey,
           onTap: () {
             if (pagina == "editar") {}
             if (pagina == "logout") {
@@ -133,7 +135,11 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Text(texto, style: TextStyle(fontSize: 15.0)),
+                    child: Text(texto,
+                        style: TextStyle(
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.deepPurple)),
                   ),
                 ]),
                 Icon(Icons.arrow_right),

@@ -99,6 +99,9 @@ class _LancamentosPageState
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.search), onPressed: () {}),
+        ],
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,

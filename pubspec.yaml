@@ -31,6 +31,10 @@ dependencies:
   flutter_modular: ^1.2.3
   table_calendar: ^2.2.3
   date_field: ^0.1.2
+  flutter_alert: ^0.4.0
+  rflutter_alert: ^1.0.3
+  qr_code_scanner: ^0.0.13
+  webview_flutter: ^0.3.22+1
   flutter:
     sdk: flutter
   
