@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ea_assistant/app/shared/auth/auth_controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class FornecedorModel {
@@ -15,6 +16,7 @@ class FornecedorModel {
   String cidade;
   String estado;
   String bairro;
+  String telefone;
   String complemento = 'S/C';
   DocumentReference reference;
 
@@ -24,6 +26,7 @@ class FornecedorModel {
       this.razaoSocial = '',
       this.cnpj = '',
       this.id = '',
+      this.telefone = '',
       this.cep = '',
       this.estado = '',
       this.cidade = '',
@@ -39,6 +42,7 @@ class FornecedorModel {
         nomeFantasia: doc['nome fantasia'],
         cnpj: doc['cnpj'],
         id: doc['id'],
+        telefone: doc['telefone'],
         cep: doc['cep'],
         estado: doc['UF'],
         cidade: doc['cidade'],
@@ -54,6 +58,7 @@ class FornecedorModel {
         'razao social': razaoSocial,
         'nome fantasia': nomeFantasia,
         'cnpj': cnpj,
+        'telefone': telefone,
         'id': auth.user.uid,
         'cep': cep,
         'UF': estado,
@@ -68,6 +73,7 @@ class FornecedorModel {
         'razao social': razaoSocial,
         'nome fantasia': nomeFantasia,
         'cnpj': cnpj,
+        'telefone': telefone,
         'id': id,
         'cep': cep,
         'UF': estado,

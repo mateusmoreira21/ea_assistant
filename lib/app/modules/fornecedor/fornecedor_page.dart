@@ -1,9 +1,11 @@
 import 'package:ea_assistant/app/shared/auth/auth_controller.dart';
 import 'package:ea_assistant/app/modules/fornecedor/models/fornecedor_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_alert/flutter_alert.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'fornecedor_controller.dart';
 
 class FornecedorPage extends StatefulWidget {
@@ -96,6 +98,7 @@ class _FornecedorPageState
                               getRowAlert(
                                   "Razão social", "${model.razaoSocial}"),
                               getRowAlert("Cnpj", "${model.cnpj}"),
+                              getRowAlert("telefone", "${model.telefone}"),
                               getRowAlert("Cidade", "${model.cidade}"),
                             ],
                           ),
@@ -110,6 +113,18 @@ class _FornecedorPageState
                               color: Color.fromRGBO(0, 179, 134, 1.0),
                               radius: BorderRadius.circular(0.0),
                             ),
+                            if (model.telefone != "")
+                              DialogButton(
+                                child: Text(
+                                  "Ligar",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                ),
+                                onPressed: () =>
+                                    launch("tel:${model.telefone}"),
+                                color: Color.fromRGBO(0, 179, 134, 1.0),
+                                radius: BorderRadius.circular(0.0),
+                              )
                           ],
                         ).show();
                       },
@@ -133,7 +148,22 @@ class _FornecedorPageState
                               IconButton(
                                   color: Colors.red,
                                   icon: const Icon(Icons.delete),
-                                  onPressed: () {})
+                                  onPressed: () {
+                                    showAlert(
+                                      context: context,
+                                      title: "Apagar fornecedor",
+                                      body:
+                                          "Tem certeza que deseja apagar o fornecedor?",
+                                      actions: [
+                                        AlertAction(
+                                          text: "Apagar",
+                                          isDestructiveAction: true,
+                                          onPressed: () {},
+                                        ),
+                                      ],
+                                      cancelable: true,
+                                    );
+                                  })
                             ],
                           )),
                     ),
@@ -181,6 +211,19 @@ class _FornecedorPageState
                   height: 12,
                 ),
                 TextFormField(
+                  keyboardType: TextInputType.number,
+                  initialValue: editModel.telefone,
+                  onChanged: (value) => editModel.telefone = value,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Telefone',
+                  ),
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                TextFormField(
+                  keyboardType: TextInputType.number,
                   initialValue: editModel.cnpj,
                   onChanged: (value) => editModel.cnpj = value,
                   decoration: InputDecoration(
@@ -192,6 +235,7 @@ class _FornecedorPageState
                   height: 12,
                 ),
                 TextFormField(
+                  keyboardType: TextInputType.number,
                   initialValue: editModel.cep,
                   onChanged: (value) => editModel.cep = value,
                   decoration: InputDecoration(

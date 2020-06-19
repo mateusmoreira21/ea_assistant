@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
 import '../animation/FadeAnimation.dart';
 import '../shared/auth/auth_controller.dart';
 
@@ -33,30 +33,39 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(begin: Alignment.topCenter, colors: [
-        Colors.purple[700],
-        Colors.deepPurple[800],
-        Colors.deepPurple[900]
-      ])),
-      child: FadeAnimation(
-        1.4,
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: 25.0,
-            ),
-            Image.asset(
-              'lib/app/images/logo.png',
-              width: 150.0,
-            ),
-            SizedBox(
-              height: 25.0,
-            ),
-            CircularProgressIndicator(),
-          ],
+    return MaterialApp(
+      localizationsDelegates: [
+        // ... app-specific localization delegate[s] here
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [const Locale('pt', 'BR')],
+      home: Container(
+        decoration: BoxDecoration(
+            gradient: LinearGradient(begin: Alignment.topCenter, colors: [
+          Colors.purple[700],
+          Colors.deepPurple[800],
+          Colors.deepPurple[900]
+        ])),
+        child: FadeAnimation(
+          1.4,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                height: 25.0,
+              ),
+              Image.asset(
+                'lib/app/images/logo.png',
+                width: 150.0,
+              ),
+              SizedBox(
+                height: 25.0,
+              ),
+              CircularProgressIndicator(),
+            ],
+          ),
         ),
       ),
     );

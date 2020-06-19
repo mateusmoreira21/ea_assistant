@@ -1,6 +1,8 @@
+import 'package:ea_assistant/app/modules/qrcode/qrcode/webview_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'qrcode_controller.dart';
 
 class QrcodePage extends StatefulWidget {
@@ -20,7 +22,8 @@ class _QrcodePageState extends ModularState<QrcodePage, QrcodeController> {
   var qrText = 'vazio';
   var flashState = flashOn;
   var cameraState = frontCamera;
-  QRViewController qrcontroller; //o nome desse qrcontroller era originalmente controller, mas tava dando conflito com o controler q
+  QRViewController
+      qrcontroller; //o nome desse qrcontroller era originalmente controller, mas tava dando conflito com o controler q
   //ja tava aqui.
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   //use 'controller' variable to access controller
@@ -103,12 +106,20 @@ class _QrcodePageState extends ModularState<QrcodePage, QrcodeController> {
                       ),
                       Container(
                         margin: EdgeInsets.all(8),
-                        child: RaisedButton(
-                          onPressed: () {
-                            qrcontroller?.resumeCamera();
-                          },
-                          child: Text('Enviar', style: TextStyle(fontSize: 20)),
-                        ),
+                        child: qrText != "vazio"
+                            ? RaisedButton(
+                                onPressed: () {
+                                  qrcontroller?.resumeCamera();
+                                  _launchInBrowser(qrText);
+                                },
+                                child: Text('Enviar',
+                                    style: TextStyle(fontSize: 20)),
+                              )
+                            : RaisedButton(
+                                onPressed: null,
+                                child: Text('Nenhum qr encontrado',
+                                    style: TextStyle(fontSize: 20)),
+                              ),
                       ),
                     ],
                   ),
@@ -142,5 +153,18 @@ class _QrcodePageState extends ModularState<QrcodePage, QrcodeController> {
   void dispose() {
     qrcontroller.dispose();
     super.dispose();
+  }
+}
+
+Future<void> _launchInBrowser(String url) async {
+  if (await canLaunch(url)) {
+    await launch(
+      url,
+      forceSafariVC: false,
+      forceWebView: false,
+      headers: <String, String>{'my_header_key': 'my_header_value'},
+    );
+  } else {
+    throw 'Could not launch $url';
   }
 }
