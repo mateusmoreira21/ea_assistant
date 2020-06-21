@@ -104,6 +104,7 @@ class _DashboardPageState
 
   @override
   Widget build(BuildContext context) {
+    String sinal;
     double totalReceita = 0;
     double totalDespesa = 0;
     double total = 0;
@@ -196,10 +197,18 @@ class _DashboardPageState
                         }
                       });
                       total = totalReceita - totalDespesa;
+                      if (total < 0) {
+                        total = total * -1;
+                        sinal = "-";
+                      } else if (total > 0) {
+                        sinal = "+";
+                      } else {
+                        sinal = "";
+                      }
                       var array = [
-                        "$total",
-                        "$totalDespesa",
-                        "$totalReceita",
+                        "$sinal R\$ $total",
+                        "R\$ $totalDespesa",
+                        "R\$ $totalReceita",
                       ];
 
                       return GridView.builder(
@@ -242,7 +251,7 @@ class _DashboardPageState
                                         ),
                                       ),
                                       Text(
-                                        "R\$ ${array[index]}",
+                                        "${array[index]}",
                                         style: TextStyle(
                                             fontSize: 19,
                                             color: Colors.white60,

@@ -21,16 +21,38 @@ class _FornecedorPageState
     extends ModularState<FornecedorPage, FornecedorController> {
   //use 'controller' variable to access controller
   final auth = Modular.get<AuthController>();
-
+  bool isSearching = false;
   @override
   Widget build(BuildContext context) {
+    var _searchKey = new TextEditingController();
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.deepPurpleAccent,
           centerTitle: true,
-          title: Text(widget.title),
+          title: isSearching == false
+              ? Text(widget.title)
+              : TextField(
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                  onSubmitted: (value) {
+                    setState(() {
+                      _searchKey.text = value;
+                    });
+                  },
+                  controller: _searchKey,
+                  decoration: InputDecoration(
+                      hintText: "Pesquisar ",
+                      hintStyle: TextStyle(color: Colors.white, fontSize: 20))),
           actions: <Widget>[
-            IconButton(icon: Icon(Icons.search), onPressed: () {}),
+            IconButton(
+                icon: isSearching == false
+                    ? Icon(Icons.search)
+                    : Icon(Icons.cancel),
+                onPressed: () {
+                  setState(() {
+                    isSearching = !isSearching;
+                    print(isSearching);
+                  });
+                }),
           ],
         ),
         floatingActionButton: FloatingActionButton(

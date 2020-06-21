@@ -194,6 +194,14 @@ class _LancamentosPageState
                                         color: Colors.white60,
                                         fontWeight: FontWeight.bold),
                                   ),
+                                  subtitle: Text(
+                                    'R\$ ' +
+                                        snapshot.data.documents[index]["valor"]
+                                            .toString(),
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w800),
+                                  ),
                                 ),
                               ),
                             );

@@ -11,7 +11,11 @@ class FornecedorRepository implements IFornecedorRespository {
 
   @override
   Stream<List<FornecedorModel>> getTodos() {
-    return firestore.collection('fornecedores').where('id', isEqualTo: auth.user.uid).snapshots().map((query) {
+    return firestore
+        .collection('fornecedores')
+        .where('id', isEqualTo: auth.user.uid)
+        .snapshots()
+        .map((query) {
       return query.documents.map((doc) {
         return FornecedorModel.fromDocument(doc);
       }).toList();
