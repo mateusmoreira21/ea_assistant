@@ -84,16 +84,14 @@ abstract class _SignupControllerBase with Store {
         .then((user) async {
       firebaseAuth = user;
 
-      await _saveUserData(userData);
+      await _saveUserData();
     }).catchError((e) {});
   }
 
-  void recoverPass() {}
-
-  Future<void> _saveUserData(Map<String, dynamic> userData) async {
+  Future<void> _saveUserData() async {
     await db
         .collection("users")
         .document(firebaseAuth.user.uid)
-        .setData(userData);
+        .setData({'name': name, 'email': email, 'id': firebaseAuth.user.uid});
   }
 }

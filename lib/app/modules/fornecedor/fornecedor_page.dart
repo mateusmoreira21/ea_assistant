@@ -153,7 +153,7 @@ class _FornecedorPageState
                       },
                       child: ListTile(
                           leading: Icon(
-                            Icons.account_circle,
+                            Icons.business,
                             size: 50,
                             color: Colors.black54,
                           ),
@@ -196,16 +196,19 @@ class _FornecedorPageState
         }));
   }
 
-  var telefoneMask = MaskTextInputFormatter(mask: "(##) # ####-####", filter: { "#": RegExp(r'[0-9]') });
-  var cnpjMask = MaskTextInputFormatter(mask: "##.###.###/####-##", filter: { "#": RegExp(r'[0-9]') });
-  var cepMask = MaskTextInputFormatter(mask: "#####-###", filter: { "#": RegExp(r'[0-9]') });
+  var telefoneMask = MaskTextInputFormatter(
+      mask: "(##) # ####-####", filter: {"#": RegExp(r'[0-9]')});
+  var cnpjMask = MaskTextInputFormatter(
+      mask: "##.###.###/####-##", filter: {"#": RegExp(r'[0-9]')});
+  var cepMask = MaskTextInputFormatter(
+      mask: "#####-###", filter: {"#": RegExp(r'[0-9]')});
 
   _showDialog([FornecedorModel editModel]) {
     editModel ??= FornecedorModel();
     showDialog(
         context: context,
         builder: (_) {
-          return Scaffold( 
+          return Scaffold(
             appBar: AppBar(
                 backgroundColor: Colors.deepPurple,
                 title: Text(editModel.id.isEmpty
@@ -220,7 +223,7 @@ class _FornecedorPageState
                   onChanged: (value) => editModel.razaoSocial = value,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Razão Social', 
+                    labelText: 'Razão Social',
                   ),
                 ),
                 SizedBox(

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ea_assistant/app/shared/auth/auth_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,8 @@ class LoginController = _LoginControllerBase with _$LoginController;
 
 abstract class _LoginControllerBase with Store {
   AuthController auth = Modular.get();
-  
+  Firestore firebase;
+
   @observable
   FirebaseUser currentUser;
 
@@ -51,7 +53,16 @@ abstract class _LoginControllerBase with Store {
     try {
       loading = true;
       await auth.loginWithEmail(context, this.usuario, this.senha);
-      Modular.to.pushReplacementNamed('/home');
+
+      if (Firestore.instance
+              .collection('users')
+              .where('id', isEqualTo: auth.user.uid)
+              .snapshots()
+              .contains(null) ==
+          null) {
+        Modular.to.pushReplacementNamed('/home/dados');
+      } else
+        Modular.to.pushReplacementNamed('/home');
     } catch (e) {
       loading = false;
       print("Error: ${e.toString()}");
@@ -61,6 +72,4 @@ abstract class _LoginControllerBase with Store {
       ));
     }
   }
-
-  
 }

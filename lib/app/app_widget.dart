@@ -14,7 +14,7 @@ class AppWidget extends StatelessWidget {
       ],
       debugShowCheckedModeBanner: false,
       navigatorKey: Modular.navigatorKey,
-      title: 'Flutter Slidy',
+      title: 'EA Assistant',
       theme: ThemeData(
         primarySwatch: Colors.deepPurple,
       ),

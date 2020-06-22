@@ -1,4 +1,5 @@
 import 'package:ea_assistant/app/animation/FadeAnimation.dart';
+import 'package:ea_assistant/app/modules/home/dadosMei/models/dadosMei_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:ea_assistant/app/shared/auth/auth_controller.dart';
@@ -15,6 +16,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends ModularState<HomePage, HomeController> {
   //use 'controller' variable to access controller
   final auth = Modular.get<AuthController>();
+  DadosMeiModel model;
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +117,9 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
         child: InkWell(
           splashColor: Colors.grey,
           onTap: () {
-            if (pagina == "editar") {}
+            if (pagina == "editar") {
+              Navigator.pushNamed(context, 'home/dados');
+            }
             if (pagina == "logout") {
               controller.logoff();
             }

@@ -1,6 +1,7 @@
 import 'package:ea_assistant/app/app_controller.dart';
 import 'package:ea_assistant/app/modules/dashboard/dashboard_module.dart';
 import 'package:ea_assistant/app/modules/fornecedor/fornecedor_module.dart';
+import 'package:ea_assistant/app/modules/home/dadosMei/dadosMei_module.dart';
 import 'package:ea_assistant/app/modules/lancamentos/lancamentos_module.dart';
 import 'package:ea_assistant/app/modules/login/login_module.dart';
 import 'package:ea_assistant/app/modules/qrcode/qrcode/qrcode_module.dart';
@@ -26,6 +27,7 @@ class AppModule extends MainModule {
         Router('/', child: (_, args) => SplashPage()),
         Router('/login', module: LoginModule()),
         Router('/home', module: HomeModule()),
+        Router('/home/dados', module: DadosMeiModule()),
         Router('/home/fornecedor', module: FornecedorModule()),
         Router('/home/lancamentos', module: LancamentosModule()),
         Router('/home/dashboard', module: DashboardModule()),

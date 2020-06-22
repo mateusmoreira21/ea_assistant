@@ -1,5 +1,6 @@
 import 'package:ea_assistant/app/modules/dashboard/dashboard_module.dart';
 import 'package:ea_assistant/app/modules/fornecedor/fornecedor_module.dart';
+import 'package:ea_assistant/app/modules/home/dadosMei/dadosMei_module.dart';
 import 'package:ea_assistant/app/modules/home/home_controller.dart';
 import 'package:ea_assistant/app/modules/home/sobre_page.dart';
 import 'package:ea_assistant/app/modules/lancamentos/lancamentos_module.dart';
@@ -15,6 +16,7 @@ class HomeModule extends ChildModule {
   @override
   List<Router> get routers => [
         Router(Modular.initialRoute, child: (_, args) => HomePage()),
+        Router('/dados', module: DadosMeiModule()),
         Router('/sobre', child: (_, args) => SobrePage()),
         Router('/fornecedor', module: FornecedorModule()),
         Router('/lancamentos', module: LancamentosModule()),
