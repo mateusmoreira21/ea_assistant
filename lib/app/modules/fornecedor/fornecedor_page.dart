@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_alert/flutter_alert.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'fornecedor_controller.dart';
@@ -195,12 +196,16 @@ class _FornecedorPageState
         }));
   }
 
+  var telefoneMask = MaskTextInputFormatter(mask: "(##) # ####-####", filter: { "#": RegExp(r'[0-9]') });
+  var cnpjMask = MaskTextInputFormatter(mask: "##.###.###/####-##", filter: { "#": RegExp(r'[0-9]') });
+  var cepMask = MaskTextInputFormatter(mask: "#####-###", filter: { "#": RegExp(r'[0-9]') });
+
   _showDialog([FornecedorModel editModel]) {
     editModel ??= FornecedorModel();
     showDialog(
         context: context,
         builder: (_) {
-          return Scaffold(
+          return Scaffold( 
             appBar: AppBar(
                 backgroundColor: Colors.deepPurple,
                 title: Text(editModel.id.isEmpty
@@ -215,7 +220,7 @@ class _FornecedorPageState
                   onChanged: (value) => editModel.razaoSocial = value,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Razão Social',
+                    labelText: 'Razão Social', 
                   ),
                 ),
                 SizedBox(
@@ -234,6 +239,7 @@ class _FornecedorPageState
                 ),
                 TextFormField(
                   keyboardType: TextInputType.number,
+                  inputFormatters: [telefoneMask],
                   initialValue: editModel.telefone,
                   onChanged: (value) => editModel.telefone = value,
                   decoration: InputDecoration(
@@ -246,6 +252,7 @@ class _FornecedorPageState
                 ),
                 TextFormField(
                   keyboardType: TextInputType.number,
+                  inputFormatters: [cnpjMask],
                   initialValue: editModel.cnpj,
                   onChanged: (value) => editModel.cnpj = value,
                   decoration: InputDecoration(
@@ -258,6 +265,7 @@ class _FornecedorPageState
                 ),
                 TextFormField(
                   keyboardType: TextInputType.number,
+                  inputFormatters: [cepMask],
                   initialValue: editModel.cep,
                   onChanged: (value) => editModel.cep = value,
                   decoration: InputDecoration(
