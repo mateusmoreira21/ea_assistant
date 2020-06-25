@@ -25,24 +25,11 @@ class _FornecedorPageState
   bool isSearching = false;
   @override
   Widget build(BuildContext context) {
-    var _searchKey = new TextEditingController();
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.deepPurpleAccent,
           centerTitle: true,
-          title: isSearching == false
-              ? Text(widget.title)
-              : TextField(
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                  onSubmitted: (value) {
-                    setState(() {
-                      _searchKey.text = value;
-                    });
-                  },
-                  controller: _searchKey,
-                  decoration: InputDecoration(
-                      hintText: "Pesquisar ",
-                      hintStyle: TextStyle(color: Colors.white, fontSize: 20))),
+          title: Text(widget.title),
           actions: <Widget>[
             IconButton(
                 icon: isSearching == false

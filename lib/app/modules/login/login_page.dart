@@ -194,42 +194,22 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                                     height: 50,
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(50),
-                                        color: Colors.blue),
-                                    child: FlatButton(
-                                      child: SizedBox(
-                                        width: double.infinity,
-                                        child: Text("Facebook",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                            textAlign: TextAlign.center),
-                                      ),
-                                      onPressed: () {},
-                                    ),
-                                  )),
-                            ),
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Expanded(
-                              child: FadeAnimation(
-                                  1.8,
-                                  Container(
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(50),
                                         color: Colors.white),
                                     child: FlatButton(
                                       child: SizedBox(
-                                        width: double.infinity,
-                                        child: Text("Google",
-                                            style: TextStyle(
-                                              color: Colors.redAccent[700],
-                                              fontWeight: FontWeight.bold,
+                                          width: double.infinity,
+                                          child: ListTile(
+                                            leading: Image.asset(
+                                              "lib/app/images/icons/google.png",
+                                              height: 30,
                                             ),
-                                            textAlign: TextAlign.center),
-                                      ),
+                                            title: Text("Entre com o Google",
+                                                style: TextStyle(
+                                                  color: Colors.redAccent[700],
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                                textAlign: TextAlign.center),
+                                          )),
                                       onPressed: () {
                                         controller.loginWithGoogle();
                                       },
@@ -263,7 +243,8 @@ class _LoginPageState extends ModularState<LoginPage, LoginController> {
                                 ),
                                 padding: EdgeInsets.zero,
                                 onPressed: () {
-                                  Modular.to.pushReplacementNamed('/login/signup');
+                                  Modular.to
+                                      .pushReplacementNamed('/login/signup');
                                 },
                               ),
                             ],

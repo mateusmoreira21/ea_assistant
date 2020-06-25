@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ea_assistant/app/animation/FadeAnimation.dart';
 import 'package:ea_assistant/app/modules/lancamentos/model/lancamentos_model.dart';
+import 'package:ea_assistant/app/shared/auth/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -22,13 +23,13 @@ class LancamentosPage extends StatefulWidget {
 class _LancamentosPageState
     extends ModularState<LancamentosPage, LancamentosController> {
   //use 'controller' variable to access controller
-
-  Future retornaFuture() async {
+  final auth = Modular.get<AuthController>();
+  Future retornaFuture(auth) async {
     var firestore = Firestore.instance;
     QuerySnapshot qn;
     if (dataInicial != null) {
       qn = await firestore
-          .collection("lancamentos")
+          .collection("lancamento")
           .where("date",
               isGreaterThanOrEqualTo: Timestamp.fromDate(dataInicial))
           .where("date",
@@ -36,8 +37,9 @@ class _LancamentosPageState
           .getDocuments();
     } else {
       qn = await firestore
-          .collection("lancamentos")
+          .collection("lancamento")
           .where("date", isLessThanOrEqualTo: Timestamp.fromDate(dataAtual))
+          .where("id", isEqualTo: auth.user.uid)
           .getDocuments();
     }
     return qn;
@@ -47,6 +49,7 @@ class _LancamentosPageState
   List<LancamentosModel> items;
   var db = Firestore.instance;
   StreamSubscription<QuerySnapshot> lancamentoInscricao;
+
   @override
   void initState() {
     dataInicial = new DateTime(dataAtual.year, (dataAtual.month), 1, 0);
@@ -59,7 +62,7 @@ class _LancamentosPageState
     lancamentoInscricao?.cancel();
 
     lancamentoInscricao = db
-        .collection("lancamentos")
+        .collection("lancamento")
         .where("date", isGreaterThanOrEqualTo: Timestamp.fromDate(data))
         .where("date", isLessThan: Timestamp.fromDate(dataAtual))
         .snapshots()
@@ -99,9 +102,6 @@ class _LancamentosPageState
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
-        actions: <Widget>[
-          IconButton(icon: Icon(Icons.search), onPressed: () {}),
-        ],
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -148,7 +148,7 @@ class _LancamentosPageState
             ),
             Expanded(
               child: FutureBuilder(
-                  /*meus dados*/ future: retornaFuture(),
+                  /*meus dados*/ future: retornaFuture(auth),
                   builder: (context, snapshot) {
                     switch (snapshot.connectionState) {
                       case ConnectionState.none:
@@ -162,13 +162,12 @@ class _LancamentosPageState
                         return ListView.builder(
                           padding: EdgeInsets.only(
                               top: 0, left: 10, right: 10, bottom: 80),
-                          itemCount: snapshot.data.documents.length,
+                          itemCount: documentos.length,
                           itemBuilder: (BuildContext context, int index) {
                             return FadeAnimation(
                               0.4,
                               Card(
-                                color: snapshot.data.documents[index]["tipo"] ==
-                                        false
+                                color: documentos[index]["tipo"] == false
                                     ? Colors.red[300]
                                     : Colors.green,
                                 child: ListTile(

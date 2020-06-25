@@ -24,12 +24,6 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
         appBar: AppBar(
           backgroundColor: Colors.deepPurple,
           title: Text(widget.title),
-          actions: <Widget>[
-            auth.user != null
-                ? IconButton(
-                    icon: Icon(Icons.clear), onPressed: controller.logoff)
-                : Container(),
-          ],
         ),
         drawer: Drawer(
           child: ListView(
