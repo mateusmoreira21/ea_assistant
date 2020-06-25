@@ -3,10 +3,13 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ea_assistant/app/animation/FadeAnimation.dart';
 import 'package:ea_assistant/app/modules/lancamentos/model/lancamentos_model.dart';
+import 'package:ea_assistant/app/shared/auth/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'dashboard_controller.dart';
+
+final auth = Modular.get<AuthController>();
 
 class DashboardPage extends StatefulWidget {
   final String title;
@@ -31,7 +34,8 @@ class _DashboardPageState
     QuerySnapshot qn;
     if (dataInicial != null) {
       lancamentoInscricao = db
-          .collection("lancamentos")
+          .collection("lancamento")
+          .where('id', isEqualTo: auth.user.uid)
           .where("date",
               isGreaterThanOrEqualTo: Timestamp.fromDate(dataInicial))
           .where("date", isLessThan: Timestamp.fromDate(dataFinal))
@@ -46,7 +50,7 @@ class _DashboardPageState
         items = lancamentos;
       });
       qn = await firestore
-          .collection("lancamentos")
+          .collection("lancamento")
           .where("date",
               isGreaterThanOrEqualTo: Timestamp.fromDate(dataInicial))
           .where("date",
@@ -54,7 +58,7 @@ class _DashboardPageState
           .getDocuments();
     } else {
       qn = await firestore
-          .collection("lancamentos")
+          .collection("lancamento")
           .where("date", isLessThanOrEqualTo: Timestamp.fromDate(dataAtual))
           .getDocuments();
     }
@@ -80,7 +84,7 @@ class _DashboardPageState
     lancamentoInscricao?.cancel();
 
     lancamentoInscricao =
-        db.collection("lancamentos").snapshots().listen((snapshot) {
+        db.collection("lancamento").snapshots().listen((snapshot) {
       final List<LancamentosModel> lancamentos = snapshot.documents
           .map(
             (documentSnapshot) => LancamentosModel.fromMap(

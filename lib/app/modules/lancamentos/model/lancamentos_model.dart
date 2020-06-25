@@ -53,7 +53,7 @@ class LancamentosModel {
     this.descricao = map["descricao"];
     this.tipo = map["tipo"];
     this.valor = map["valor"];
-    this.id = map['id'];
+    this.id = id ?? '';
   }
   Stream<QuerySnapshot> getListaLancamentos() {
     return Firestore.instance.collection("lancamento").snapshots();

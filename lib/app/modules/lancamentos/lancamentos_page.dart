@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ea_assistant/app/animation/FadeAnimation.dart';
+import 'package:ea_assistant/app/modules/lancamentos/cadastroLancamento_page.dart';
 import 'package:ea_assistant/app/modules/lancamentos/model/lancamentos_model.dart';
 import 'package:ea_assistant/app/shared/auth/auth_controller.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'lancamentos_controller.dart';
 import 'package:intl/intl.dart';
+
+final auth = Modular.get<AuthController>();
 
 class LancamentosPage extends StatefulWidget {
   final String title;
@@ -63,6 +66,10 @@ class _LancamentosPageState
 
     lancamentoInscricao = db
         .collection("lancamento")
+<<<<<<< HEAD
+=======
+        .where("id", isEqualTo: auth.user.uid)
+>>>>>>> 6ae10cdb1ed19a2a488be7582252546617ca1278
         .where("date", isGreaterThanOrEqualTo: Timestamp.fromDate(data))
         .where("date", isLessThan: Timestamp.fromDate(dataAtual))
         .snapshots()
@@ -102,6 +109,19 @@ class _LancamentosPageState
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.deepPurpleAccent,
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => CadastroLancamento(
+                      LancamentosModel(descricao: "", valor: 0, id: null))));
+        },
+        child: Icon(
+          Icons.add,
+        ),
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,
