@@ -2,13 +2,17 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ea_assistant/app/animation/FadeAnimation.dart';
+import 'package:ea_assistant/app/modules/lancamentos/cadastroLancamento_page.dart';
 import 'package:ea_assistant/app/modules/lancamentos/model/lancamentos_model.dart';
+import 'package:ea_assistant/app/shared/auth/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'lancamentos_controller.dart';
 import 'package:intl/intl.dart';
+
+final auth = Modular.get<AuthController>();
 
 class LancamentosPage extends StatefulWidget {
   final String title;
@@ -28,7 +32,7 @@ class _LancamentosPageState
     QuerySnapshot qn;
     if (dataInicial != null) {
       qn = await firestore
-          .collection("lancamentos")
+          .collection("lancamento")
           .where("date",
               isGreaterThanOrEqualTo: Timestamp.fromDate(dataInicial))
           .where("date",
@@ -36,7 +40,7 @@ class _LancamentosPageState
           .getDocuments();
     } else {
       qn = await firestore
-          .collection("lancamentos")
+          .collection("lancamento")
           .where("date", isLessThanOrEqualTo: Timestamp.fromDate(dataAtual))
           .getDocuments();
     }
@@ -59,7 +63,8 @@ class _LancamentosPageState
     lancamentoInscricao?.cancel();
 
     lancamentoInscricao = db
-        .collection("lancamentos")
+        .collection("lancamento")
+        .where("id", isEqualTo: auth.user.uid)
         .where("date", isGreaterThanOrEqualTo: Timestamp.fromDate(data))
         .where("date", isLessThan: Timestamp.fromDate(dataAtual))
         .snapshots()
@@ -102,6 +107,19 @@ class _LancamentosPageState
         actions: <Widget>[
           IconButton(icon: Icon(Icons.search), onPressed: () {}),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.deepPurpleAccent,
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => CadastroLancamento(
+                      LancamentosModel(descricao: "", valor: 0, id: null))));
+        },
+        child: Icon(
+          Icons.add,
+        ),
       ),
       body: Container(
         width: MediaQuery.of(context).size.width,

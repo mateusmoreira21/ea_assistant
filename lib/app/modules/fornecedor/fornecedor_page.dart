@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ea_assistant/app/shared/auth/auth_controller.dart';
 import 'package:ea_assistant/app/modules/fornecedor/models/fornecedor_model.dart';
 import 'package:flutter/material.dart';
@@ -181,7 +182,10 @@ class _FornecedorPageState
                                         AlertAction(
                                           text: "Apagar",
                                           isDestructiveAction: true,
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            deletaFornecedor(context,
+                                                list[index].reference, index);
+                                          },
                                         ),
                                       ],
                                       cancelable: true,
@@ -352,4 +356,10 @@ class _FornecedorPageState
       ],
     );
   }
+}
+
+void deletaFornecedor(
+    BuildContext context, DocumentReference doc, int position) async {
+  var db = Firestore.instance;
+  db.collection("fornecedores").document(doc.documentID).delete();
 }
