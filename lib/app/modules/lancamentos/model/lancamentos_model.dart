@@ -60,7 +60,8 @@ class LancamentosModel {
   }
 
   addLancamento(
-      Timestamp date, String descricao, bool tipo, double valor, String id) {
+      Timestamp date, String descricao, bool tipo, double valor, String id,
+      {DocumentSnapshot doc}) {
     if (id != null) {
       LancamentosModel l = LancamentosModel(
           date: date, descricao: descricao, tipo: tipo, valor: valor);

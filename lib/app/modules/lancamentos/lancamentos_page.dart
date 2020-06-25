@@ -66,10 +66,6 @@ class _LancamentosPageState
 
     lancamentoInscricao = db
         .collection("lancamento")
-<<<<<<< HEAD
-=======
-        .where("id", isEqualTo: auth.user.uid)
->>>>>>> 6ae10cdb1ed19a2a488be7582252546617ca1278
         .where("date", isGreaterThanOrEqualTo: Timestamp.fromDate(data))
         .where("date", isLessThan: Timestamp.fromDate(dataAtual))
         .snapshots()
@@ -179,6 +175,7 @@ class _LancamentosPageState
                       default:
                         List<DocumentSnapshot> documentos =
                             snapshot.data.documents;
+
                         return ListView.builder(
                           padding: EdgeInsets.only(
                               top: 0, left: 10, right: 10, bottom: 80),
@@ -198,12 +195,35 @@ class _LancamentosPageState
                                       IconButton(
                                         padding: EdgeInsets.all(0),
                                         icon: Icon(Icons.edit),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      CadastroLancamento(
+                                                        LancamentosModel(
+                                                            descricao:
+                                                                documentos[
+                                                                        index]
+                                                                    [
+                                                                    "descricao"],
+                                                            tipo: documentos[
+                                                                index]["tipo"],
+                                                            valor: documentos[
+                                                                index]["valor"],
+                                                            id: documentos[
+                                                                    index]
+                                                                .documentID),
+                                                      )));
+                                        },
                                       ),
                                       IconButton(
                                         padding: EdgeInsets.all(0),
                                         icon: Icon(Icons.delete_forever),
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          deletaLancamento(context,
+                                              documentos[index], index);
+                                        },
                                       ),
                                     ],
                                   ),
@@ -234,4 +254,10 @@ class _LancamentosPageState
       ),
     );
   }
+}
+
+void deletaLancamento(
+    BuildContext context, DocumentSnapshot doc, int position) async {
+  var db = Firestore.instance;
+  db.collection("lancamento").document(doc.documentID).delete();
 }

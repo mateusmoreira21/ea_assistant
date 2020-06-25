@@ -150,7 +150,7 @@ class _CadastroLancamentoState extends State<CadastroLancamento> {
                               _descricaoController.text,
                               tipo,
                               double.parse(_valorController.text),
-                              null);
+                              widget.lancamento.id);
                         },
                       ),
                     ),
