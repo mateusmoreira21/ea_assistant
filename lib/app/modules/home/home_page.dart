@@ -64,13 +64,13 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
                     child: InkWell(
                       onTap: () {
                         if (index == 0)
-                          Navigator.pushNamed(context, 'home/qrcode');
+                          Navigator.pushNamed(context, 'home/fornecedor');
                         else if (index == 1)
                           Navigator.pushNamed(context, 'home/dashboard');
                         else if (index == 2)
-                          Navigator.pushNamed(context, 'home/fornecedor');
-                        else if (index == 3)
                           Navigator.pushNamed(context, 'home/lancamentos');
+                        else if (index == 3)
+                          Navigator.pushNamed(context, 'home/qrcode');
                       },
                       child: Column(
                         children: <Widget>[

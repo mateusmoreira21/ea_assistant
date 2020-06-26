@@ -6,6 +6,7 @@ import 'package:ea_assistant/app/modules/lancamentos/cadastroLancamento_page.dar
 import 'package:ea_assistant/app/modules/lancamentos/model/lancamentos_model.dart';
 import 'package:ea_assistant/app/shared/auth/auth_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_alert/flutter_alert.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -104,6 +105,11 @@ class _LancamentosPageState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pushNamed(context, "home");
+            }),
         title: Text(widget.title),
       ),
       floatingActionButton: FloatingActionButton(
@@ -221,8 +227,24 @@ class _LancamentosPageState
                                         padding: EdgeInsets.all(0),
                                         icon: Icon(Icons.delete_forever),
                                         onPressed: () {
-                                          deletaLancamento(context,
-                                              documentos[index], index);
+                                          showAlert(
+                                            context: context,
+                                            title:
+                                                "Só apague caso tenha cadastrado errado!!",
+                                            body:
+                                                "Tem certeza que deseja apagar o Lancamento?",
+                                            actions: [
+                                              AlertAction(
+                                                text: "Apagar",
+                                                isDestructiveAction: true,
+                                                onPressed: () {
+                                                  deletaLancamento(context,
+                                                      documentos[index], index);
+                                                },
+                                              ),
+                                            ],
+                                            cancelable: true,
+                                          );
                                         },
                                       ),
                                     ],

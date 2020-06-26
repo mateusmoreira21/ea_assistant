@@ -89,6 +89,7 @@ class _CadastroLancamentoState extends State<CadastroLancamento> {
                       0.4,
                       TextFormField(
                         controller: _valorController,
+                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10)),
@@ -151,6 +152,8 @@ class _CadastroLancamentoState extends State<CadastroLancamento> {
                               tipo,
                               double.parse(_valorController.text),
                               widget.lancamento.id);
+                          Navigator.popAndPushNamed(
+                              context, "home/lancamentos");
                         },
                       ),
                     ),

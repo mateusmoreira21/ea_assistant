@@ -14,19 +14,19 @@ abstract class _HomeControllerBase with Store {
 
   services() {
     return [
-      "Consultar NFCE na receita",
-      "Dashboard",
       "Fornecedores",
+      "Dashboard",
       "Lançamentos",
+      "Consultar NFCE na receita",
     ];
   }
 
   images() {
     return [
-      "lib/app/images/icons/qrcode.png",
-      "lib/app/images/icons/dashboard.png",
       "lib/app/images/icons/fornecedor.png",
+      "lib/app/images/icons/dashboard.png",
       "lib/app/images/icons/lancamento.png",
+      "lib/app/images/icons/qrcode.png",
     ];
   }
 }
