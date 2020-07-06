@@ -72,7 +72,7 @@ abstract class _DashboardControllerBase with Store {
         .where("date", isLessThanOrEqualTo: Timestamp.fromDate(dataFinal))
         .snapshots()
         .listen((snapshot) {
-      final List<LancamentosModel> lancamentos = snapshot.documents
+      List<LancamentosModel> lancamentos = snapshot.documents
           .map(
             (documentSnapshot) => LancamentosModel.fromMap(
                 documentSnapshot.data, documentSnapshot.documentID),
